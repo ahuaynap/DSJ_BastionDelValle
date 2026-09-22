@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe02dcebdb1d44974a8537b511bf8f16, type: 3}
+  m_Name: CollectibleDat_Pollinator
+  m_EditorClassIdentifier: Assembly-CSharp::CollectibleData
+  collectibleId: BIO_POLINIZADOR_01
+  displayName: Mariposa del valle
+  category: 2
+  shortDescription: Un polinizador esencial para la biodiversidad del valle.
+  educationalContent: "Las mariposas, abejas y otros polinizadores transportan\npolen
+    entre las flores y permiten que numerosas plantas\npuedan reproducirse. Proteger
+    sus h\xE1bitats contribuye a\nmantener la biodiversidad y favorece la producci\xF3n
+    agr\xEDcola."
+  worldSprite: {fileID: 0}
+  infographicSprite: {fileID: 0}
