@@ -16,7 +16,7 @@ public class TowerAttack : MonoBehaviour
     private float attackCooldown;
     private bool isInitialized;
 
-    public void Initialize(
+    public bool Initialize(
         ProjectileManager manager,
         TowerData data,
         GameManager gameState)
@@ -29,7 +29,7 @@ public class TowerAttack : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (data == null)
@@ -40,7 +40,7 @@ public class TowerAttack : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (targeting == null)
@@ -51,7 +51,7 @@ public class TowerAttack : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (projectilePrefab == null)
@@ -62,7 +62,7 @@ public class TowerAttack : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (firePoint == null)
@@ -72,7 +72,7 @@ public class TowerAttack : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (gameState == null)
@@ -83,7 +83,7 @@ public class TowerAttack : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         projectileManager = manager;
@@ -92,6 +92,7 @@ public class TowerAttack : MonoBehaviour
 
         attackCooldown = 0f;
         isInitialized = true;
+        return true;
     }
 
     private void Update()

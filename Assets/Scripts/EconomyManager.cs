@@ -72,4 +72,23 @@ public class EconomyManager : MonoBehaviour
             $"Total: {currentResources}"
         );
     }
+
+    public bool Refund(int amount)
+    {
+        if (amount <= 0)
+        {
+            return false;
+        }
+
+        currentResources += amount;
+
+        OnResourcesChanged?.Invoke(currentResources);
+
+        Debug.Log(
+            $"Refunded {amount} resources. " +
+            $"Total: {currentResources}"
+        );
+
+        return true;
+    }
 }

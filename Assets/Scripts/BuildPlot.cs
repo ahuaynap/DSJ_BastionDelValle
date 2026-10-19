@@ -13,6 +13,7 @@ public class BuildPlot : MonoBehaviour
 
     private TowerController currentTower;
 
+    private bool isBuilding;
     private bool missingPauseManagerReported;
 
     public bool IsOccupied =>
@@ -81,6 +82,11 @@ public class BuildPlot : MonoBehaviour
             return;
         }
 
+        if (isBuilding)
+        {
+            return;
+        }
+
         if (IsOccupied)
         {
             Debug.Log(
@@ -131,42 +137,99 @@ public class BuildPlot : MonoBehaviour
             return;
         }
 
-        int towerCost =
-            towerPrefab.BuildCost;
+        int towerCost = towerPrefab.BuildCost;
 
-        if (!economyManager.TrySpend(towerCost))
-        {
-            return;
-        }
-
-        BuildTower();
-    }
-
-    private void BuildTower()
-    {
-        TowerController tower =
-            Instantiate(
-                towerPrefab,
-                transform.position,
-                Quaternion.identity,
-                towerContainer
-            );
-
-        if (tower == null)
+        if (towerCost < 0)
         {
             Debug.LogError(
-                $"Could not build tower on {gameObject.name}.",
+                $"{gameObject.name} cannot build. " +
+                $"Tower cost is invalid: {towerCost}.",
                 this
             );
 
             return;
         }
 
-        tower.Initialize(
-            projectileManager,
-            gameManager
-        );
+        if (!economyManager.CanAfford(towerCost))
+        {
+            Debug.Log(
+                $"Insufficient resources. " +
+                $"Required: {towerCost} | " +
+                $"Available: {economyManager.CurrentResources}"
+            );
 
+            return;
+        }
+
+        BuildTower(towerCost);
+    }
+
+    private void BuildTower(int towerCost)
+    {
+        isBuilding = true;
+
+        TowerController tower = null;
+        int chargedAmount = 0;
+        bool succeeded = false;
+
+        try
+        {
+            if (!economyManager.TrySpend(towerCost))
+            {
+                return;
+            }
+
+            chargedAmount = towerCost;
+
+            tower = Instantiate(
+                towerPrefab,
+                transform.position,
+                Quaternion.identity,
+                towerContainer
+            );
+
+            if (tower == null)
+            {
+                Debug.LogError(
+                    $"Could not build tower on {gameObject.name}.",
+                    this
+                );
+
+                return;
+            }
+
+            bool initialized = tower.Initialize(
+                projectileManager,
+                gameManager
+            );
+
+            if (!initialized || !tower.IsInitialized)
+            {
+                Debug.LogError(
+                    $"Could not initialize tower on " +
+                    $"{gameObject.name}.",
+                    this
+                );
+
+                return;
+            }
+
+            ConfirmBuild(tower);
+            succeeded = true;
+        }
+        finally
+        {
+            if (!succeeded)
+            {
+                CancelBuild(tower, chargedAmount);
+            }
+
+            isBuilding = false;
+        }
+    }
+
+    private void ConfirmBuild(TowerController tower)
+    {
         currentTower = tower;
 
         if (plotRenderer != null)
@@ -184,6 +247,22 @@ public class BuildPlot : MonoBehaviour
             $"{gameObject.name}. " +
             $"Cost: {tower.BuildCost}"
         );
+    }
+
+    private void CancelBuild(
+        TowerController tower,
+        int chargedAmount)
+    {
+        if (tower != null)
+        {
+            tower.gameObject.SetActive(false);
+            Destroy(tower.gameObject);
+        }
+
+        if (chargedAmount > 0)
+        {
+            economyManager.Refund(chargedAmount);
+        }
     }
 
     private bool HasPauseManager()

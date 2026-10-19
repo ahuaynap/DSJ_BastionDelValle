@@ -3,26 +3,35 @@ using System;
 
 public class BastionHealth : MonoBehaviour
 {
+    private const int MinimumHealth = 1;
+
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private GameManager gameManager;
 
     private int currentHealth;
 
+    private bool isDestroyed;
+    private bool canResolveDamage;
+
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
-
-    private bool isDestroyed;
 
     public event Action<int, int> OnHealthChanged;
 
     private void Awake()
     {
-        currentHealth = maxHealth;
+        ConfigureHealth();
+        ConfigureDamageResolution();
     }
 
     public void TakeDamage(int damage)
     {
-        if (isDestroyed)
+        if (isDestroyed || !canResolveDamage)
+        {
+            return;
+        }
+
+        if (!gameManager.IsPlaying)
         {
             return;
         }
@@ -32,42 +41,80 @@ public class BastionHealth : MonoBehaviour
             return;
         }
 
-        currentHealth -= damage;
+        int updatedHealth = damage >= currentHealth
+            ? 0
+            : currentHealth - damage;
+
+        bool reachedZero = updatedHealth == 0;
+
+        if (reachedZero)
+        {
+            isDestroyed = true;
+        }
+
+        currentHealth = updatedHealth;
+
         OnHealthChanged?.Invoke(
             currentHealth,
             maxHealth
         );
-
-        if (currentHealth < 0)
-        {
-            currentHealth = 0;
-        }
 
         Debug.Log(
             $"Bastion received {damage} damage. " +
             $"Health: {currentHealth}/{maxHealth}"
         );
 
-        if (currentHealth == 0)
+        if (reachedZero)
         {
-            Die();
+            ResolveDestruction();
         }
     }
 
-    private void Die()
+    private void ConfigureHealth()
     {
-        if (isDestroyed)
+        if (maxHealth < MinimumHealth)
         {
+            Debug.LogError(
+                $"{gameObject.name} has invalid max health " +
+                $"{maxHealth}. Using {MinimumHealth}.",
+                this
+            );
+
+            maxHealth = MinimumHealth;
+        }
+
+        currentHealth = maxHealth;
+    }
+
+    private void ConfigureDamageResolution()
+    {
+        if (gameManager != null)
+        {
+            canResolveDamage = true;
             return;
         }
 
-        isDestroyed = true;
+        canResolveDamage = false;
 
+        Debug.LogError(
+            $"{gameObject.name} has no GameManager. " +
+            "Bastion damage is disabled.",
+            this
+        );
+    }
+
+    private void ResolveDestruction()
+    {
         Debug.Log("BASTION DESTROYED");
 
-        if (gameManager != null)
+        gameManager.SetDefeat();
+    }
+
+    private void OnValidate()
+    {
+        if (maxHealth < MinimumHealth)
         {
-            gameManager.SetDefeat();
+            maxHealth = MinimumHealth;
         }
     }
 }

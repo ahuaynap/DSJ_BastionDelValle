@@ -23,10 +23,15 @@ public class TowerController : MonoBehaviour
 
     public bool IsInitialized => isInitialized;
 
-    public void Initialize(
+    public bool Initialize(
         ProjectileManager projectileManager,
         GameManager manager)
     {
+        if (isInitialized)
+        {
+            return true;
+        }
+
         if (towerData == null)
         {
             Debug.LogError(
@@ -34,7 +39,7 @@ public class TowerController : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (towerTargeting == null)
@@ -45,7 +50,7 @@ public class TowerController : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (towerAttack == null)
@@ -56,7 +61,7 @@ public class TowerController : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (projectileManager == null)
@@ -67,7 +72,7 @@ public class TowerController : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (manager == null)
@@ -78,26 +83,31 @@ public class TowerController : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (!projectileManager.Initialize(manager))
         {
-            return;
+            return false;
         }
 
-        towerTargeting.Initialize(
-            towerData,
-            manager
-        );
+        if (!towerTargeting.Initialize(
+                towerData,
+                manager))
+        {
+            return false;
+        }
 
-        towerAttack.Initialize(
-            projectileManager,
-            towerData,
-            manager
-        );
+        if (!towerAttack.Initialize(
+                projectileManager,
+                towerData,
+                manager))
+        {
+            return false;
+        }
 
         isInitialized = true;
+        return true;
     }
 
     private void OnValidate()

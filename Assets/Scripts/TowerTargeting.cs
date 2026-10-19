@@ -15,7 +15,7 @@ public class TowerTargeting : MonoBehaviour
             ? towerData.AttackRange
             : 0f;
 
-    public void Initialize(
+    public bool Initialize(
         TowerData data,
         GameManager manager)
     {
@@ -27,7 +27,7 @@ public class TowerTargeting : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         if (manager == null)
@@ -38,13 +38,14 @@ public class TowerTargeting : MonoBehaviour
                 this
             );
 
-            return;
+            return false;
         }
 
         towerData = data;
         gameManager = manager;
         currentTarget = null;
         isInitialized = true;
+        return true;
     }
 
     private void Update()
