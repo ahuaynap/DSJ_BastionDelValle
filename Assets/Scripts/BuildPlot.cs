@@ -15,6 +15,31 @@ public class BuildPlot : MonoBehaviour
     public bool IsOccupied =>
         currentTower != null;
 
+    private void Awake()
+    {
+        if (projectileManager == null)
+        {
+            Debug.LogError(
+                $"{gameObject.name} has no ProjectileManager.",
+                this
+            );
+
+            return;
+        }
+
+        if (gameManager == null)
+        {
+            Debug.LogError(
+                $"{gameObject.name} has no GameManager.",
+                this
+            );
+
+            return;
+        }
+
+        projectileManager.Initialize(gameManager);
+    }
+
     private void OnMouseDown()
     {
         TryBuild();
@@ -22,8 +47,17 @@ public class BuildPlot : MonoBehaviour
 
     private void TryBuild()
     {
-        if (gameManager == null ||
-            !gameManager.IsPlaying)
+        if (gameManager == null)
+        {
+            Debug.LogError(
+                $"{gameObject.name} has no GameManager.",
+                this
+            );
+
+            return;
+        }
+
+        if (!gameManager.IsPlaying)
         {
             return;
         }
@@ -109,7 +143,10 @@ public class BuildPlot : MonoBehaviour
             return;
         }
 
-        tower.Initialize(projectileManager);
+        tower.Initialize(
+            projectileManager,
+            gameManager
+        );
 
         currentTower = tower;
 

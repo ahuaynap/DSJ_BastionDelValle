@@ -11,13 +11,15 @@ public class TowerAttack : MonoBehaviour
 
     private ProjectileManager projectileManager;
     private TowerData towerData;
+    private GameManager gameManager;
 
     private float attackCooldown;
     private bool isInitialized;
 
     public void Initialize(
         ProjectileManager manager,
-        TowerData data)
+        TowerData data,
+        GameManager gameState)
     {
         if (manager == null)
         {
@@ -73,8 +75,20 @@ public class TowerAttack : MonoBehaviour
             return;
         }
 
+        if (gameState == null)
+        {
+            Debug.LogError(
+                $"{gameObject.name} cannot initialize " +
+                "TowerAttack without a GameManager.",
+                this
+            );
+
+            return;
+        }
+
         projectileManager = manager;
         towerData = data;
+        gameManager = gameState;
 
         attackCooldown = 0f;
         isInitialized = true;
@@ -83,6 +97,12 @@ public class TowerAttack : MonoBehaviour
     private void Update()
     {
         if (!isInitialized)
+        {
+            return;
+        }
+
+        if (gameManager == null ||
+            !gameManager.IsPlaying)
         {
             return;
         }
@@ -115,6 +135,12 @@ public class TowerAttack : MonoBehaviour
 
     private void Attack(EnemyHealth target)
     {
+        if (gameManager == null ||
+            !gameManager.IsPlaying)
+        {
+            return;
+        }
+
         if (target == null ||
             target.IsDead ||
             !target.IsInitialized)

@@ -25,6 +25,9 @@ public class WaveManager : MonoBehaviour
 
     private WaveState currentWaveState;
 
+    private Coroutine spawnRoutine;
+    private Coroutine intermissionRoutine;
+
     public int CurrentWave => currentWaveIndex + 1;
     public int TotalWaves => waves.Length;
 
@@ -61,10 +64,25 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
+        if (gameManager == null)
+        {
+            Debug.LogError(
+                "WaveManager requires a GameManager. " +
+                "Waves will not start.",
+                this
+            );
+
+            return;
+        }
+
+        gameManager.OnGameStateChanged +=
+            HandleGameStateChanged;
+
         if (waves == null || waves.Length == 0)
         {
             Debug.LogError(
-                "WaveManager has no waves configured."
+                "WaveManager has no waves configured.",
+                this
             );
 
             return;
@@ -75,9 +93,45 @@ public class WaveManager : MonoBehaviour
         StartCurrentWave();
     }
 
+    private void OnDestroy()
+    {
+        if (gameManager != null)
+        {
+            gameManager.OnGameStateChanged -=
+                HandleGameStateChanged;
+        }
+    }
+
+    private void HandleGameStateChanged(
+        GameState state)
+    {
+        if (state == GameState.Playing)
+        {
+            return;
+        }
+
+        CancelWaveRoutines();
+    }
+
+    private void CancelWaveRoutines()
+    {
+        if (spawnRoutine != null)
+        {
+            StopCoroutine(spawnRoutine);
+            spawnRoutine = null;
+        }
+
+        if (intermissionRoutine != null)
+        {
+            StopCoroutine(intermissionRoutine);
+            intermissionRoutine = null;
+        }
+    }
+
     private void StartCurrentWave()
     {
-        if (!gameManager.IsPlaying)
+        if (gameManager == null ||
+            !gameManager.IsPlaying)
         {
             return;
         }
@@ -87,9 +141,9 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        StopAllCoroutines();
+        CancelWaveRoutines();
 
-        StartCoroutine(
+        spawnRoutine = StartCoroutine(
             SpawnWave(waves[currentWaveIndex])
         );
     }
@@ -149,13 +203,18 @@ public class WaveManager : MonoBehaviour
 
         activeEnemies--;
 
+        bool combatIsActive =
+            gameManager != null &&
+            gameManager.IsPlaying;
+
         switch (reason)
         {
             case EnemyFinishReason.Killed:
 
                 killedEnemies++;
 
-                if (enemy.Health != null &&
+                if (combatIsActive &&
+                    enemy.Health != null &&
                     economyManager != null)
                 {
                     economyManager.AddResources(
@@ -175,6 +234,11 @@ public class WaveManager : MonoBehaviour
         OnRemainingEnemiesChanged?.Invoke(
             RemainingEnemies
         );
+
+        if (!combatIsActive)
+        {
+            return;
+        }
 
         CheckWaveCompletion();
     }
@@ -214,7 +278,7 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        StartCoroutine(
+        intermissionRoutine = StartCoroutine(
             IntermissionRoutine()
         );
     }

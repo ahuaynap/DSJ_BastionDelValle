@@ -24,7 +24,8 @@ public class TowerController : MonoBehaviour
     public bool IsInitialized => isInitialized;
 
     public void Initialize(
-        ProjectileManager projectileManager)
+        ProjectileManager projectileManager,
+        GameManager manager)
     {
         if (towerData == null)
         {
@@ -69,11 +70,31 @@ public class TowerController : MonoBehaviour
             return;
         }
 
-        towerTargeting.Initialize(towerData);
+        if (manager == null)
+        {
+            Debug.LogError(
+                $"{gameObject.name} cannot initialize " +
+                "without a GameManager.",
+                this
+            );
+
+            return;
+        }
+
+        if (!projectileManager.Initialize(manager))
+        {
+            return;
+        }
+
+        towerTargeting.Initialize(
+            towerData,
+            manager
+        );
 
         towerAttack.Initialize(
             projectileManager,
-            towerData
+            towerData,
+            manager
         );
 
         isInitialized = true;

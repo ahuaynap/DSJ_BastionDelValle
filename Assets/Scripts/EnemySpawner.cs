@@ -10,7 +10,18 @@ public class EnemySpawner : MonoBehaviour
 
     public EnemyMovement SpawnEnemy()
     {
-        if (gameManager == null || !gameManager.IsPlaying)
+        if (gameManager == null)
+        {
+            Debug.LogError(
+                $"{gameObject.name} cannot spawn enemies " +
+                "without a GameManager.",
+                this
+            );
+
+            return null;
+        }
+
+        if (!gameManager.IsPlaying)
         {
             return null;
         }

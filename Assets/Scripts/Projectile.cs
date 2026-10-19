@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
     private float moveSpeed;
 
     private bool hasHit;
+    private bool isWithdrawn;
     private bool isInitialized;
 
     public void Initialize(
@@ -56,12 +57,28 @@ public class Projectile : MonoBehaviour
         moveSpeed = projectileSpeed;
 
         hasHit = false;
+        isWithdrawn = false;
         isInitialized = true;
+    }
+
+    public void WithdrawWithoutDamage()
+    {
+        if (isWithdrawn || hasHit)
+        {
+            return;
+        }
+
+        isWithdrawn = true;
+        hasHit = true;
+        isInitialized = false;
+        target = null;
+
+        Destroy(gameObject);
     }
 
     private void Update()
     {
-        if (!isInitialized || hasHit)
+        if (!isInitialized || hasHit || isWithdrawn)
         {
             return;
         }

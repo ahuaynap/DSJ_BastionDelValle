@@ -3,6 +3,7 @@ using UnityEngine;
 public class TowerTargeting : MonoBehaviour
 {
     private TowerData towerData;
+    private GameManager gameManager;
     private EnemyHealth currentTarget;
     private bool isInitialized;
 
@@ -14,7 +15,9 @@ public class TowerTargeting : MonoBehaviour
             ? towerData.AttackRange
             : 0f;
 
-    public void Initialize(TowerData data)
+    public void Initialize(
+        TowerData data,
+        GameManager manager)
     {
         if (data == null)
         {
@@ -27,7 +30,19 @@ public class TowerTargeting : MonoBehaviour
             return;
         }
 
+        if (manager == null)
+        {
+            Debug.LogError(
+                $"{gameObject.name} cannot initialize " +
+                "TowerTargeting without a GameManager.",
+                this
+            );
+
+            return;
+        }
+
         towerData = data;
+        gameManager = manager;
         currentTarget = null;
         isInitialized = true;
     }
@@ -36,6 +51,13 @@ public class TowerTargeting : MonoBehaviour
     {
         if (!isInitialized)
         {
+            return;
+        }
+
+        if (gameManager == null ||
+            !gameManager.IsPlaying)
+        {
+            currentTarget = null;
             return;
         }
 
