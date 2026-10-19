@@ -1,0 +1,13 @@
+{
+    "name": "BastionDelValle.EditModeTests",
+    "references": [
+        "BastionDelValle.Progress"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "autoReferenced": false
+}

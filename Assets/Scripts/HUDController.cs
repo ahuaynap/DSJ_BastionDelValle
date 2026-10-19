@@ -8,6 +8,7 @@ public class HUDController : MonoBehaviour
     [SerializeField] private BastionHealth bastionHealth;
     [SerializeField] private EconomyManager economyManager;
     [SerializeField] private WaveManager waveManager;
+    [SerializeField] private EducationalCollectionManager collectionManager;
 
     [Header("Texts")]
     [SerializeField] private TMP_Text bastionText;
@@ -16,6 +17,7 @@ public class HUDController : MonoBehaviour
     [SerializeField] private TMP_Text enemiesText;
     [SerializeField] private TMP_Text waveStateText;
     [SerializeField] private TMP_Text statusText;
+    [SerializeField] private TMP_Text discoveriesText;
 
     private void Start()
     {
@@ -54,6 +56,8 @@ public class HUDController : MonoBehaviour
 
         waveText.text =
             $"WAVE    {waveManager.CurrentWave}";
+
+        BindDiscoveries();
     }
 
     private void OnDestroy()
@@ -88,6 +92,32 @@ public class HUDController : MonoBehaviour
             waveManager.OnWaveStateChanged -=
                 UpdateWaveState;
         }
+
+        if (collectionManager != null)
+        {
+            collectionManager.OnDiscoveryCountChanged -=
+                UpdateDiscoveries;
+        }
+    }
+
+    private void BindDiscoveries()
+    {
+        if (collectionManager == null ||
+            discoveriesText == null)
+        {
+            Debug.LogError(
+                "HUDController cannot show educational " +
+                "discoveries. Assign the collection manager " +
+                "and the discoveries text.",
+                this
+            );
+
+            return;
+        }
+
+        collectionManager.OnDiscoveryCountChanged +=
+            UpdateDiscoveries;
+        UpdateDiscoveries(collectionManager.DiscoveryCount);
     }
 
     private void UpdateBastion(
@@ -129,5 +159,16 @@ public class HUDController : MonoBehaviour
     {
         waveStateText.text =
             $"WAVE STATE    {state.ToString().ToUpper()}";
+    }
+
+    private void UpdateDiscoveries(int discoveries)
+    {
+        if (discoveriesText == null)
+        {
+            return;
+        }
+
+        discoveriesText.text =
+            $"DISCOVERIES    {discoveries}";
     }
 }

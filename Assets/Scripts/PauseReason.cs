@@ -2,5 +2,6 @@ public enum PauseReason
 {
     EducationalModal,
     UserMenu,
-    System
+    System,
+    Codex
 }

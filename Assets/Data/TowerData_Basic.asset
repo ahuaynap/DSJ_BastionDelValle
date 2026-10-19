@@ -15,7 +15,7 @@ MonoBehaviour:
   towerId: tower_basic
   displayName: Basic Tower
   description: Torre graybox utilizada para validar el combate.
-  buildCost: 30
+  buildCost: 40
   attackRange: 2.1
   attackInterval: 1
   projectileDamage: 10
