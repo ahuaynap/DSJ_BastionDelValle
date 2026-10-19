@@ -150,6 +150,8 @@ public class EducationalModalController :
             return;
         }
 
+        WorldInteractionBlock.SuppressCurrentClick();
+
         HideModalVisuals();
 
         pauseManager.ReleasePause(

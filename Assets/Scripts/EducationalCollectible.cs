@@ -10,6 +10,7 @@ public class EducationalCollectible : MonoBehaviour
 
     private Collider2D interactionCollider;
     private GameManager gameManager;
+    private PauseManager pauseManager;
     private CollectibleData collectibleData;
 
     private float remainingLifetime;
@@ -52,6 +53,7 @@ public class EducationalCollectible : MonoBehaviour
 
     public void Initialize(
         GameManager manager,
+        PauseManager pause,
         CollectibleData data,
         float lifetime)
     {
@@ -60,6 +62,17 @@ public class EducationalCollectible : MonoBehaviour
             Debug.LogError(
                 $"{gameObject.name} cannot initialize " +
                 "without a GameManager.",
+                this
+            );
+
+            return;
+        }
+
+        if (pause == null)
+        {
+            Debug.LogError(
+                $"{gameObject.name} cannot initialize " +
+                "without a PauseManager.",
                 this
             );
 
@@ -89,6 +102,7 @@ public class EducationalCollectible : MonoBehaviour
         }
 
         gameManager = manager;
+        pauseManager = pause;
         collectibleData = data;
         remainingLifetime = lifetime;
 
@@ -138,6 +152,13 @@ public class EducationalCollectible : MonoBehaviour
 
         if (gameManager == null ||
             !gameManager.IsPlaying)
+        {
+            return;
+        }
+
+        if (pauseManager == null ||
+            !WorldInteractionBlock.AllowsWorldAction(
+                pauseManager))
         {
             return;
         }

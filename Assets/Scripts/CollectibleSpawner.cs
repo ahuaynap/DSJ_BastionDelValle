@@ -16,6 +16,9 @@ public class CollectibleSpawner : MonoBehaviour
     private GameManager gameManager;
 
     [SerializeField]
+    private PauseManager pauseManager;
+
+    [SerializeField]
     private WaveManager waveManager;
 
     [SerializeField]
@@ -214,6 +217,7 @@ public class CollectibleSpawner : MonoBehaviour
 
         collectible.Initialize(
             gameManager,
+            pauseManager,
             selectedData,
             collectibleLifetime
         );
@@ -383,6 +387,17 @@ public class CollectibleSpawner : MonoBehaviour
         {
             Debug.LogError(
                 "CollectibleSpawner has no GameManager.",
+                this
+            );
+
+            isValid = false;
+        }
+
+        if (pauseManager == null)
+        {
+            Debug.LogError(
+                "CollectibleSpawner has no PauseManager. " +
+                "Collectible capture is disabled.",
                 this
             );
 

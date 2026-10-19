@@ -6,17 +6,25 @@ public class BuildPlot : MonoBehaviour
     [SerializeField] private Transform towerContainer;
     [SerializeField] private ProjectileManager projectileManager;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private PauseManager pauseManager;
     [SerializeField] private SpriteRenderer plotRenderer;
     [SerializeField] private Collider2D plotCollider;
     [SerializeField] private EconomyManager economyManager;
 
     private TowerController currentTower;
 
+    private bool missingPauseManagerReported;
+
     public bool IsOccupied =>
         currentTower != null;
 
     private void Awake()
     {
+        if (pauseManager == null)
+        {
+            ReportMissingPauseManager();
+        }
+
         if (projectileManager == null)
         {
             Debug.LogError(
@@ -58,6 +66,17 @@ public class BuildPlot : MonoBehaviour
         }
 
         if (!gameManager.IsPlaying)
+        {
+            return;
+        }
+
+        if (!HasPauseManager())
+        {
+            return;
+        }
+
+        if (!WorldInteractionBlock.AllowsWorldAction(
+                pauseManager))
         {
             return;
         }
@@ -164,6 +183,33 @@ public class BuildPlot : MonoBehaviour
             $"{tower.Data.DisplayName} built on " +
             $"{gameObject.name}. " +
             $"Cost: {tower.BuildCost}"
+        );
+    }
+
+    private bool HasPauseManager()
+    {
+        if (pauseManager != null)
+        {
+            return true;
+        }
+
+        ReportMissingPauseManager();
+        return false;
+    }
+
+    private void ReportMissingPauseManager()
+    {
+        if (missingPauseManagerReported)
+        {
+            return;
+        }
+
+        missingPauseManagerReported = true;
+
+        Debug.LogError(
+            $"{gameObject.name} has no PauseManager. " +
+            "Building is disabled.",
+            this
         );
     }
 }
