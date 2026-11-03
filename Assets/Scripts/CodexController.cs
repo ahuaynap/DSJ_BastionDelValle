@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -28,6 +29,12 @@ public class CodexController : MonoBehaviour
 
     [SerializeField]
     private EducationalModalController educationalModal;
+
+    [SerializeField]
+    private AudioSettingsPanel audioSettings;
+
+    [SerializeField]
+    private bool menuConsultation;
 
     [Header("Catalog")]
     [SerializeField]
@@ -94,7 +101,10 @@ public class CodexController : MonoBehaviour
 
     private void Awake()
     {
-        HidePanel();
+        if (!isOpen)
+        {
+            HidePanel();
+        }
     }
 
     private void OnEnable()
@@ -127,22 +137,65 @@ public class CodexController : MonoBehaviour
         }
 
         isOpen = true;
-        ownsCodexPause = true;
-        openButton.interactable = false;
-        pauseManager.RequestPause(PauseReason.Codex);
+        ownsCodexPause = pauseManager != null && !menuConsultation;
+        MatchConsultation.NotifyOpened();
 
-        if (panelRoot != null)
+        if (openButton != null)
         {
-            panelRoot.SetActive(true);
+            openButton.interactable = false;
         }
 
-        if (titleText != null)
+        if (ownsCodexPause)
         {
-            titleText.text = "Memorias del valle";
+            pauseManager.RequestPause(PauseReason.Codex);
         }
 
-        Rebuild();
+        ShowPanel();
+        Rebuild(null);
         FocusInitialControl();
+    }
+
+    public bool TryOpenForCollectedMemory(
+        CollectibleData data,
+        Action releaseCurrentConsultation)
+    {
+        if (isOpen || ownsCodexPause)
+        {
+            return false;
+        }
+
+        if (releaseCurrentConsultation == null)
+        {
+            Debug.LogError(
+                "Codex handoff has no way to release the " +
+                "educational card. The card stays open.",
+                this
+            );
+
+            return false;
+        }
+
+        if (!TryFindConsultableEntry(
+                data,
+                out CollectibleData entry))
+        {
+            return false;
+        }
+
+        isOpen = true;
+        ownsCodexPause = true;
+
+        if (openButton != null)
+        {
+            openButton.interactable = false;
+        }
+
+        pauseManager.RequestPause(PauseReason.Codex);
+        releaseCurrentConsultation.Invoke();
+        ShowPanel();
+        Rebuild(entry);
+        FocusInitialControl();
+        return true;
     }
 
     public void CloseFromButton()
@@ -159,7 +212,7 @@ public class CodexController : MonoBehaviour
             return false;
         }
 
-        if (!gameManager.IsPlaying)
+        if (!menuConsultation && !gameManager.IsPlaying)
         {
             Debug.Log(
                 "Codex can open only while the match is playing."
@@ -168,10 +221,19 @@ public class CodexController : MonoBehaviour
             return false;
         }
 
-        if (educationalModal.IsModalOpen)
+        if (!menuConsultation && educationalModal.IsModalOpen)
         {
             Debug.Log(
                 "Codex stays closed while the educational card is open."
+            );
+
+            return false;
+        }
+
+        if (audioSettings != null && audioSettings.IsOpen)
+        {
+            Debug.Log(
+                "Codex stays closed while sound settings are open."
             );
 
             return false;
@@ -182,13 +244,17 @@ public class CodexController : MonoBehaviour
 
     private bool HasRequiredDependencies()
     {
-        bool valid = gameManager != null &&
-            pauseManager != null &&
-            collectionManager != null &&
-            educationalModal != null &&
-            panelRoot != null &&
-            openButton != null &&
-            closeButton != null;
+        bool valid = menuConsultation
+            ? collectionManager != null &&
+                panelRoot != null &&
+                closeButton != null
+            : gameManager != null &&
+                pauseManager != null &&
+                collectionManager != null &&
+                educationalModal != null &&
+                panelRoot != null &&
+                openButton != null &&
+                closeButton != null;
 
         if (valid || missingDependenciesReported)
         {
@@ -215,7 +281,167 @@ public class CodexController : MonoBehaviour
         HideAndRelease();
     }
 
-    private void Rebuild()
+    private void ShowPanel()
+    {
+        if (panelRoot != null)
+        {
+            panelRoot.SetActive(true);
+            panelRoot.transform.SetAsLastSibling();
+        }
+
+        if (titleText != null)
+        {
+            titleText.text = "Memorias del valle";
+        }
+    }
+
+    private bool TryFindConsultableEntry(
+        CollectibleData requested,
+        out CollectibleData entry)
+    {
+        entry = null;
+
+        if (!HasRequiredDependencies())
+        {
+            return false;
+        }
+
+        if (!gameManager.IsPlaying)
+        {
+            Debug.Log(
+                "Codex handoff was rejected because the " +
+                "match is not playing. The educational " +
+                "card stays open."
+            );
+
+            return false;
+        }
+
+        if (!educationalModal.IsModalOpen)
+        {
+            Debug.Log(
+                "Codex handoff is only available while the " +
+                "educational card is open."
+            );
+
+            return false;
+        }
+
+        if (requested == null ||
+            string.IsNullOrWhiteSpace(
+                requested.CollectibleId))
+        {
+            Debug.LogWarning(
+                "Codex handoff has no collected memory. " +
+                "The educational card stays open.",
+                this
+            );
+
+            return false;
+        }
+
+        if (entryPrefab == null || listContent == null)
+        {
+            Debug.LogWarning(
+                "Codex cannot show the collected memory " +
+                "because its list is not configured. " +
+                "The educational card stays open.",
+                this
+            );
+
+            return false;
+        }
+
+        entry = FindCatalogEntry(requested);
+
+        if (entry == null)
+        {
+            Debug.LogWarning(
+                "Codex has no entry for " +
+                $"{requested.CollectibleId}. " +
+                "The educational card stays open.",
+                this
+            );
+
+            return false;
+        }
+
+        if (!collectionManager.HasDiscovered(
+                entry.CollectibleId))
+        {
+            Debug.LogWarning(
+                "Codex cannot consult " +
+                $"{entry.CollectibleId} because it is " +
+                "not discovered. The educational card " +
+                "stays open.",
+                this
+            );
+
+            entry = null;
+            return false;
+        }
+
+        return true;
+    }
+
+    private CollectibleData FindCatalogEntry(
+        CollectibleData requested)
+    {
+        if (catalog == null)
+        {
+            return null;
+        }
+
+        HashSet<string> seenIds = new();
+
+        for (int index = 0; index < catalog.Length; index++)
+        {
+            CollectibleData candidate = catalog[index];
+
+            if (!TryAcceptCatalogEntry(
+                    candidate,
+                    index,
+                    seenIds))
+            {
+                continue;
+            }
+
+            if (SameMemory(candidate, requested))
+            {
+                return candidate;
+            }
+        }
+
+        return null;
+    }
+
+    private static bool SameMemory(
+        CollectibleData candidate,
+        CollectibleData requested)
+    {
+        if (candidate == null || requested == null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(candidate, requested))
+        {
+            return true;
+        }
+
+        string candidateId = candidate.CollectibleId;
+        string requestedId = requested.CollectibleId;
+
+        if (string.IsNullOrWhiteSpace(candidateId) ||
+            string.IsNullOrWhiteSpace(requestedId))
+        {
+            return false;
+        }
+
+        return candidateId == requestedId;
+    }
+
+    private void Rebuild(CollectibleData preferredEntry)
     {
         ClearRows();
         visibleEntries.Clear();
@@ -268,15 +494,39 @@ public class CodexController : MonoBehaviour
         if (counterText != null)
         {
             counterText.text =
-                $"{discoveredCount} / {availableCount}";
+                "Memorias " + discoveredCount + " / " + availableCount;
         }
 
-        BuildRows(firstDiscovered);
+        CollectibleData selected = firstDiscovered;
+
+        if (preferredEntry != null)
+        {
+            for (
+                int index = 0;
+                index < visibleEntries.Count;
+                index++)
+            {
+                CatalogEntry visible = visibleEntries[index];
+
+                if (!visible.Discovered ||
+                    !SameMemory(
+                        visible.Data,
+                        preferredEntry))
+                {
+                    continue;
+                }
+
+                selected = visible.Data;
+                break;
+            }
+        }
+
+        BuildRows(selected);
         Canvas.ForceUpdateCanvases();
 
-        if (firstDiscovered != null)
+        if (selected != null)
         {
-            ShowDiscovery(firstDiscovered);
+            ShowDiscovery(selected);
             return;
         }
 
@@ -492,6 +742,7 @@ public class CodexController : MonoBehaviour
 
     private void HideAndRelease()
     {
+        bool wasOpen = isOpen;
         isOpen = false;
 
         if (openButton != null)
@@ -502,6 +753,11 @@ public class CodexController : MonoBehaviour
         HidePanel();
         ClearRows();
         ReleaseCodexPause();
+
+        if (wasOpen)
+        {
+            MatchConsultation.NotifyClosed();
+        }
     }
 
     private void HidePanel()

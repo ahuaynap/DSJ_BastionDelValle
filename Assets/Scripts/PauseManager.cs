@@ -108,12 +108,19 @@ public class PauseManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (!IsPaused)
+        if (!IsPaused || SessionBoundary.IsTraveling)
         {
             return;
         }
 
         pauseRequests.Clear();
+
+        if (SessionReload.IsReloading || previousTimeScale <= 0f)
+        {
+            Time.timeScale = 1f;
+            return;
+        }
+
         Time.timeScale = previousTimeScale;
     }
 }

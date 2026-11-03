@@ -22,37 +22,55 @@ public class CollectibleSpawner : MonoBehaviour
     private WaveManager waveManager;
 
     [SerializeField]
+    private EducationalCollectionManager collectionManager;
+
+    [SerializeField]
     private Transform collectibleContainer;
 
     [Header("Available Content")]
     [SerializeField]
     private CollectibleData[] availableCollectibles;
 
+    [SerializeField, Min(0)]
+    private int maxDiscoveriesPerRun = 2;
+
     [Header("Spawn Timing")]
     [SerializeField, Min(0f)]
-    private float minimumSpawnDelay = 2f;
+    private float minimumSpawnDelay = 1f;
 
     [SerializeField, Min(0f)]
-    private float maximumSpawnDelay = 5f;
+    private float maximumSpawnDelay = 2f;
 
     [Header("Collectible")]
     [SerializeField, Min(0.1f)]
     private float collectibleLifetime = 12f;
 
-    private readonly HashSet<int>
-        scheduledWaves = new();
-
-    private EducationalCollectible
-        activeCollectible;
-
+    private readonly HashSet<int> scheduledWaves = new();
+    private EducationalCollectible activeCollectible;
     private Coroutine spawnRoutine;
-    private int pendingWave = -1;
+    private bool capturedThisWave;
+    private bool missingCollectionReported;
 
     public bool HasActiveCollectible =>
         activeCollectible != null;
 
-    public event Action<CollectibleData>
-        OnCollectibleCaptured;
+    public int MaxDiscoveriesPerRun =>
+        Mathf.Max(0, maxDiscoveriesPerRun);
+
+    public event Action<CollectibleData> OnCollectibleCaptured;
+
+    public bool HasUndiscoveredMemories()
+    {
+        if (collectionManager == null)
+        {
+            return false;
+        }
+
+        return MemoryCandidateRules.Undiscovered(
+            EnabledIds(),
+            collectionManager.HasDiscovered
+        ).Count > 0;
+    }
 
     private void Start()
     {
@@ -61,92 +79,94 @@ public class CollectibleSpawner : MonoBehaviour
             return;
         }
 
-        waveManager.OnWaveChanged +=
-            HandleWaveChanged;
+        waveManager.OnWaveStateChanged += HandleWaveState;
+        gameManager.OnGameStateChanged += HandleGameStateChanged;
 
-        gameManager.OnGameStateChanged +=
-            HandleGameStateChanged;
-
-        StartCoroutine(
-            RegisterInitialWaveAfterFrame()
-        );
-    }
-
-    private IEnumerator
-        RegisterInitialWaveAfterFrame()
-    {
-        yield return null;
-
-        if (gameManager.IsPlaying)
+        if (waveManager.CurrentWaveState == WaveState.Spawning)
         {
-            RequestSpawnForWave(
-                waveManager.CurrentWave
-            );
+            HandleWaveState(WaveState.Spawning);
         }
     }
 
-    private void HandleWaveChanged(
-        int currentWave,
-        int totalWaves)
+    private void HandleWaveState(WaveState state)
     {
-        RequestSpawnForWave(currentWave);
+        if (state == WaveState.Spawning)
+        {
+            capturedThisWave = false;
+            RequestSpawnForWave(waveManager.CurrentWave);
+            return;
+        }
+
+        if (state == WaveState.Completed ||
+            state == WaveState.Waiting ||
+            state == WaveState.SpawnError)
+        {
+            CancelPendingSpawn();
+            WithdrawActive();
+        }
     }
 
-    private void RequestSpawnForWave(
-        int waveNumber)
+    private void RequestSpawnForWave(int waveNumber)
     {
-        if (!gameManager.IsPlaying ||
-            waveNumber <= 0)
+        bool matchOver =
+            gameManager == null || !gameManager.IsPlaying;
+        bool runFull =
+            collectionManager != null &&
+            collectionManager.RunDiscoveryCount >= MaxDiscoveriesPerRun;
+
+        if (!MemoryCandidateRules.CanSchedule(
+                !matchOver,
+                true,
+                scheduledWaves.Contains(waveNumber),
+                capturedThisWave,
+                runFull,
+                matchOver))
         {
             return;
         }
 
-        if (scheduledWaves.Contains(waveNumber))
+        if (MemoryCandidateRules.Eligible(
+                EnabledIds(),
+                IsDiscovered,
+                CapturesThisRun(),
+                MaxDiscoveriesPerRun).Count == 0)
+        {
+            scheduledWaves.Add(waveNumber);
+            return;
+        }
+
+        if (activeCollectible != null || spawnRoutine != null)
         {
             return;
         }
 
         scheduledWaves.Add(waveNumber);
-
-        if (activeCollectible != null ||
-            spawnRoutine != null)
-        {
-            pendingWave = waveNumber;
-            return;
-        }
-
-        StartSpawnRoutine(waveNumber);
+        spawnRoutine = StartCoroutine(SpawnAfterDelay(waveNumber));
     }
 
-    private void StartSpawnRoutine(
-        int waveNumber)
+    private IEnumerator SpawnAfterDelay(int waveNumber)
     {
-        spawnRoutine = StartCoroutine(
-            SpawnAfterDelay(waveNumber)
+        float delay = UnityEngine.Random.Range(
+            minimumSpawnDelay,
+            maximumSpawnDelay
         );
-    }
-
-    private IEnumerator SpawnAfterDelay(
-        int waveNumber)
-    {
-        float delay =
-            UnityEngine.Random.Range(
-                minimumSpawnDelay,
-                maximumSpawnDelay
-            );
 
         yield return new WaitForSeconds(delay);
-
         spawnRoutine = null;
 
-        if (!gameManager.IsPlaying)
+        if (waveManager == null ||
+            waveManager.CurrentWave != waveNumber ||
+            waveManager.CurrentWaveState == WaveState.Waiting ||
+            waveManager.CurrentWaveState == WaveState.Completed ||
+            waveManager.CurrentWaveState == WaveState.SpawnError)
         {
             yield break;
         }
 
-        if (activeCollectible != null)
+        if (!gameManager.IsPlaying ||
+            capturedThisWave ||
+            activeCollectible != null)
         {
-            pendingWave = waveNumber;
             yield break;
         }
 
@@ -155,30 +175,20 @@ public class CollectibleSpawner : MonoBehaviour
 
     private void SpawnCollectible()
     {
-        CollectibleData selectedData =
-            SelectRandomCollectible();
+        CollectibleData selectedData = SelectEligibleCollectible();
 
         if (selectedData == null)
         {
-            Debug.LogError(
-                "CollectibleSpawner could not select " +
-                "valid CollectibleData.",
-                this
-            );
-
             return;
         }
 
-        Vector2 spawnPosition =
-            wanderingArea.GetRandomPoint();
-
-        EducationalCollectible collectible =
-            Instantiate(
-                collectiblePrefab,
-                spawnPosition,
-                Quaternion.identity,
-                collectibleContainer
-            );
+        Vector2 spawnPosition = wanderingArea.GetRandomPoint();
+        EducationalCollectible collectible = Instantiate(
+            collectiblePrefab,
+            spawnPosition,
+            Quaternion.identity,
+            collectibleContainer
+        );
 
         if (collectible == null)
         {
@@ -186,9 +196,7 @@ public class CollectibleSpawner : MonoBehaviour
         }
 
         WanderingMovement2D movement =
-            collectible.GetComponent<
-                WanderingMovement2D
-            >();
+            collectible.GetComponent<WanderingMovement2D>();
 
         if (movement == null)
         {
@@ -197,76 +205,131 @@ public class CollectibleSpawner : MonoBehaviour
                 "WanderingMovement2D.",
                 collectible
             );
-
             Destroy(collectible.gameObject);
             return;
         }
 
         activeCollectible = collectible;
-
-        collectible.OnCaptured +=
-            HandleCollectibleCaptured;
-
-        collectible.OnExpired +=
-            HandleCollectibleExpired;
-
-        movement.Initialize(
-            wanderingArea,
-            gameManager
-        );
-
+        collectible.OnCaptured += HandleCollectibleCaptured;
+        collectible.OnExpired += HandleCollectibleExpired;
+        movement.Initialize(wanderingArea, gameManager);
         collectible.Initialize(
             gameManager,
             pauseManager,
             selectedData,
             collectibleLifetime
         );
-
-        Debug.Log(
-            $"Spawned collectible: " +
-            $"{selectedData.DisplayName}."
-        );
     }
 
-    private CollectibleData
-        SelectRandomCollectible()
+    private CollectibleData SelectEligibleCollectible()
     {
-        if (availableCollectibles == null ||
-            availableCollectibles.Length == 0)
+        List<CollectibleData> pool = BuildPool();
+
+        if (pool.Count == 0)
         {
             return null;
         }
 
-        int startIndex =
-            UnityEngine.Random.Range(
-                0,
-                availableCollectibles.Length
-            );
+        CollectibleData chosen =
+            pool[UnityEngine.Random.Range(0, pool.Count)];
+        List<CollectibleData> fresh = BuildPool();
 
-        for (
-            int offset = 0;
-            offset < availableCollectibles.Length;
-            offset++)
+        for (int index = 0; index < fresh.Count; index++)
         {
-            int index =
-                (startIndex + offset) %
-                availableCollectibles.Length;
-
-            if (availableCollectibles[index] != null)
+            if (fresh[index].CollectibleId == chosen.CollectibleId)
             {
-                return availableCollectibles[index];
+                return fresh[index];
+            }
+        }
+
+        if (fresh.Count == 0)
+        {
+            return null;
+        }
+
+        return fresh[UnityEngine.Random.Range(0, fresh.Count)];
+    }
+
+    private List<CollectibleData> BuildPool()
+    {
+        List<string> ids = MemoryCandidateRules.Eligible(
+            EnabledIds(),
+            IsDiscovered,
+            CapturesThisRun(),
+            MaxDiscoveriesPerRun
+        );
+        List<CollectibleData> pool = new();
+
+        for (int index = 0; index < ids.Count; index++)
+        {
+            CollectibleData data = FindData(ids[index]);
+
+            if (data != null)
+            {
+                pool.Add(data);
+            }
+        }
+
+        return pool;
+    }
+
+    private CollectibleData FindData(string id)
+    {
+        if (availableCollectibles == null)
+        {
+            return null;
+        }
+
+        for (int index = 0; index < availableCollectibles.Length; index++)
+        {
+            CollectibleData data = availableCollectibles[index];
+
+            if (data != null && data.CollectibleId == id)
+            {
+                return data;
             }
         }
 
         return null;
     }
 
+    private List<string> EnabledIds()
+    {
+        List<string> ids = new();
+
+        if (availableCollectibles == null)
+        {
+            return ids;
+        }
+
+        for (int index = 0; index < availableCollectibles.Length; index++)
+        {
+            CollectibleData data = availableCollectibles[index];
+            ids.Add(data == null ? null : data.CollectibleId);
+        }
+
+        return ids;
+    }
+
+    private bool IsDiscovered(string id)
+    {
+        return collectionManager != null &&
+               collectionManager.HasDiscovered(id);
+    }
+
+    private int CapturesThisRun()
+    {
+        return collectionManager == null
+            ? 0
+            : collectionManager.RunDiscoveryCount;
+    }
+
     private void HandleCollectibleCaptured(
         EducationalCollectible collectible,
         CollectibleData data)
     {
+        capturedThisWave = true;
         OnCollectibleCaptured?.Invoke(data);
-
         ReleaseCollectible(collectible);
     }
 
@@ -284,42 +347,16 @@ public class CollectibleSpawner : MonoBehaviour
             return;
         }
 
-        collectible.OnCaptured -=
-            HandleCollectibleCaptured;
-
-        collectible.OnExpired -=
-            HandleCollectibleExpired;
+        collectible.OnCaptured -= HandleCollectibleCaptured;
+        collectible.OnExpired -= HandleCollectibleExpired;
 
         if (activeCollectible == collectible)
         {
             activeCollectible = null;
         }
-
-        TrySchedulePendingWave();
     }
 
-    private void TrySchedulePendingWave()
-    {
-        if (pendingWave <= 0)
-        {
-            return;
-        }
-
-        if (!gameManager.IsPlaying)
-        {
-            pendingWave = -1;
-            return;
-        }
-
-        int waveToSchedule = pendingWave;
-
-        pendingWave = -1;
-
-        StartSpawnRoutine(waveToSchedule);
-    }
-
-    private void HandleGameStateChanged(
-        GameState state)
+    private void HandleGameStateChanged(GameState state)
     {
         if (state == GameState.Playing)
         {
@@ -327,7 +364,7 @@ public class CollectibleSpawner : MonoBehaviour
         }
 
         CancelPendingSpawn();
-        CancelActiveCollectible();
+        WithdrawActive();
     }
 
     private void CancelPendingSpawn()
@@ -339,24 +376,18 @@ public class CollectibleSpawner : MonoBehaviour
 
         StopCoroutine(spawnRoutine);
         spawnRoutine = null;
-        pendingWave = -1;
     }
 
-    private void CancelActiveCollectible()
+    private void WithdrawActive()
     {
         if (activeCollectible == null)
         {
             return;
         }
 
-        activeCollectible.OnCaptured -=
-            HandleCollectibleCaptured;
-
-        activeCollectible.OnExpired -=
-            HandleCollectibleExpired;
-
-        activeCollectible.Cancel();
-        activeCollectible = null;
+        EducationalCollectible collectible = activeCollectible;
+        ReleaseCollectible(collectible);
+        collectible.Cancel();
     }
 
     private bool ValidateDependencies()
@@ -369,7 +400,6 @@ public class CollectibleSpawner : MonoBehaviour
                 "CollectibleSpawner has no prefab.",
                 this
             );
-
             isValid = false;
         }
 
@@ -379,7 +409,6 @@ public class CollectibleSpawner : MonoBehaviour
                 "CollectibleSpawner has no wandering area.",
                 this
             );
-
             isValid = false;
         }
 
@@ -389,7 +418,6 @@ public class CollectibleSpawner : MonoBehaviour
                 "CollectibleSpawner has no GameManager.",
                 this
             );
-
             isValid = false;
         }
 
@@ -400,7 +428,6 @@ public class CollectibleSpawner : MonoBehaviour
                 "Collectible capture is disabled.",
                 this
             );
-
             isValid = false;
         }
 
@@ -410,7 +437,17 @@ public class CollectibleSpawner : MonoBehaviour
                 "CollectibleSpawner has no WaveManager.",
                 this
             );
+            isValid = false;
+        }
 
+        if (collectionManager == null && !missingCollectionReported)
+        {
+            missingCollectionReported = true;
+            Debug.LogError(
+                "CollectibleSpawner has no collection. " +
+                "Memories will not appear.",
+                this
+            );
             isValid = false;
         }
 
@@ -422,7 +459,6 @@ public class CollectibleSpawner : MonoBehaviour
                 "CollectibleData configured.",
                 this
             );
-
             isValid = false;
         }
 
@@ -431,40 +467,33 @@ public class CollectibleSpawner : MonoBehaviour
 
     private void OnDestroy()
     {
+        CancelPendingSpawn();
+
         if (waveManager != null)
         {
-            waveManager.OnWaveChanged -=
-                HandleWaveChanged;
+            waveManager.OnWaveStateChanged -= HandleWaveState;
         }
 
         if (gameManager != null)
         {
-            gameManager.OnGameStateChanged -=
-                HandleGameStateChanged;
+            gameManager.OnGameStateChanged -= HandleGameStateChanged;
         }
 
         if (activeCollectible != null)
         {
-            activeCollectible.OnCaptured -=
-                HandleCollectibleCaptured;
-
-            activeCollectible.OnExpired -=
-                HandleCollectibleExpired;
+            activeCollectible.OnCaptured -= HandleCollectibleCaptured;
+            activeCollectible.OnExpired -= HandleCollectibleExpired;
         }
     }
 
     private void OnValidate()
     {
-        minimumSpawnDelay =
-            Mathf.Max(0f, minimumSpawnDelay);
-
-        maximumSpawnDelay =
-            Mathf.Max(
-                minimumSpawnDelay,
-                maximumSpawnDelay
-            );
-
-        collectibleLifetime =
-            Mathf.Max(0.1f, collectibleLifetime);
+        minimumSpawnDelay = Mathf.Max(0f, minimumSpawnDelay);
+        maximumSpawnDelay = Mathf.Max(
+            minimumSpawnDelay,
+            maximumSpawnDelay
+        );
+        collectibleLifetime = Mathf.Max(0.1f, collectibleLifetime);
+        maxDiscoveriesPerRun = Mathf.Max(0, maxDiscoveriesPerRun);
     }
 }

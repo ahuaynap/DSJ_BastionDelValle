@@ -45,7 +45,15 @@ public class EducationalModalController :
     [SerializeField]
     private Button continueButton;
 
+    [SerializeField]
+    private Button viewCodexButton;
+
+    [SerializeField]
+    private CodexController codexController;
+
+    private CollectibleData displayedCollectible;
     private bool isModalOpen;
+    private bool missingCodexReported;
 
     public bool IsModalOpen =>
         isModalOpen;
@@ -69,6 +77,27 @@ public class EducationalModalController :
         continueButton.onClick.AddListener(
             CloseModal
         );
+
+        if (viewCodexButton != null)
+        {
+            if (viewCodexButton.targetGraphic != null)
+            {
+                viewCodexButton.targetGraphic.raycastTarget =
+                    true;
+            }
+
+            viewCodexButton.onClick.AddListener(
+                OpenCodexFromCard
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                "EducationalModalController has no " +
+                "View Codex button.",
+                this
+            );
+        }
 
         HideModalVisuals();
     }
@@ -101,6 +130,8 @@ public class EducationalModalController :
         {
             return;
         }
+
+        displayedCollectible = data;
 
         categoryText.text =
             GetCategoryLabel(data.Category);
@@ -165,6 +196,42 @@ public class EducationalModalController :
         );
     }
 
+    private void OpenCodexFromCard()
+    {
+        if (!isModalOpen ||
+            displayedCollectible == null)
+        {
+            return;
+        }
+
+        WorldInteractionBlock.SuppressCurrentClick();
+
+        if (codexController == null)
+        {
+            ReportMissingCodex();
+            return;
+        }
+
+        codexController.TryOpenForCollectedMemory(
+            displayedCollectible,
+            ReleaseModalForCodexHandoff
+        );
+    }
+
+    private void ReleaseModalForCodexHandoff()
+    {
+        if (!isModalOpen)
+        {
+            return;
+        }
+
+        HideModalVisuals();
+
+        pauseManager.ReleasePause(
+            PauseReason.EducationalModal
+        );
+    }
+
     private void HandleGameStateChanged(
         GameState state)
     {
@@ -188,6 +255,7 @@ public class EducationalModalController :
     private void HideModalVisuals()
     {
         isModalOpen = false;
+        displayedCollectible = null;
 
         if (modalRoot != null)
         {
@@ -311,12 +379,50 @@ public class EducationalModalController :
             );
         }
 
-        if (isModalOpen &&
-            pauseManager != null)
+        if (viewCodexButton != null)
         {
-            pauseManager.ReleasePause(
-                PauseReason.EducationalModal
+            viewCodexButton.onClick.RemoveListener(
+                OpenCodexFromCard
             );
         }
+
+        ReleaseOwnPause();
+    }
+
+    private void OnDisable()
+    {
+        ReleaseOwnPause();
+    }
+
+    private void ReleaseOwnPause()
+    {
+        if (!isModalOpen ||
+            pauseManager == null)
+        {
+            return;
+        }
+
+        HideModalVisuals();
+
+        pauseManager.ReleasePause(
+            PauseReason.EducationalModal
+        );
+    }
+
+    private void ReportMissingCodex()
+    {
+        if (missingCodexReported)
+        {
+            return;
+        }
+
+        missingCodexReported = true;
+
+        Debug.LogError(
+            "EducationalModalController has no " +
+            "CodexController. The educational card " +
+            "stays open.",
+            this
+        );
     }
 }

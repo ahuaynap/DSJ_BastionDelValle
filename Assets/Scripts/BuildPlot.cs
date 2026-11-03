@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BuildPlot : MonoBehaviour
 {
@@ -10,11 +13,16 @@ public class BuildPlot : MonoBehaviour
     [SerializeField] private SpriteRenderer plotRenderer;
     [SerializeField] private Collider2D plotCollider;
     [SerializeField] private EconomyManager economyManager;
+    [SerializeField] private BuildSelection buildSelection;
 
     private TowerController currentTower;
 
+    public event Action<TowerController> OnTowerBuilt;
+
     private bool isBuilding;
     private bool missingPauseManagerReported;
+    private static readonly List<BuildPlot> activePlots = new List<BuildPlot>();
+    private static int handledFrame = -1;
 
     public bool IsOccupied =>
         currentTower != null;
@@ -47,11 +55,133 @@ public class BuildPlot : MonoBehaviour
         }
 
         projectileManager.Initialize(gameManager);
+        FitCollider();
     }
 
-    private void OnMouseDown()
+    private void OnEnable()
     {
-        TryBuild();
+        if (!activePlots.Contains(this))
+        {
+            activePlots.Add(this);
+        }
+
+        FitCollider();
+    }
+
+    private void OnDisable()
+    {
+        activePlots.Remove(this);
+    }
+
+    private void Update()
+    {
+        Mouse mouse = Mouse.current;
+
+        if (mouse == null || !mouse.leftButton.wasPressedThisFrame)
+        {
+            return;
+        }
+
+        if (handledFrame == Time.frameCount)
+        {
+            return;
+        }
+
+        handledFrame = Time.frameCount;
+        BuildPlot plot = PlotUnder(mouse.position.ReadValue());
+
+        if (plot != null)
+        {
+            plot.TryBuild();
+        }
+    }
+
+    private static BuildPlot PlotUnder(Vector2 screen)
+    {
+        Camera camera = Camera.main;
+
+        if (camera == null)
+        {
+            return null;
+        }
+
+        Vector3 world = camera.ScreenToWorldPoint(screen);
+        var point = new Vector2(world.x, world.y);
+        Collider2D[] hits = Physics2D.OverlapPointAll(point);
+        BuildPlot best = null;
+        float bestDistance = float.MaxValue;
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            BuildPlot plot = hits[i] != null
+                ? hits[i].GetComponent<BuildPlot>()
+                : null;
+
+            if (plot == null || !activePlots.Contains(plot))
+            {
+                continue;
+            }
+
+            Vector3 spot = plot.BuildSpot();
+            float dx = spot.x - point.x;
+            float dy = spot.y - point.y;
+            float distance = dx * dx + dy * dy;
+
+            if (distance < bestDistance)
+            {
+                best = plot;
+                bestDistance = distance;
+            }
+        }
+
+        return best;
+    }
+
+    private Vector3 BuildSpot()
+    {
+        if (plotRenderer != null)
+        {
+            return plotRenderer.bounds.center;
+        }
+
+        return transform.position;
+    }
+
+    private void FitCollider()
+    {
+        BoxCollider2D box = plotCollider as BoxCollider2D;
+
+        if (box == null || plotRenderer == null || plotRenderer.sprite == null)
+        {
+            return;
+        }
+
+        Bounds bounds = plotRenderer.bounds;
+        float diameter = Mathf.Max(bounds.size.x, bounds.size.y);
+
+        if (diameter > 2.2f)
+        {
+            diameter = 1.6f;
+        }
+
+        if (diameter < 0.8f)
+        {
+            diameter = 0.8f;
+        }
+
+        Vector3 local = transform.InverseTransformPoint(bounds.center);
+        float scale = Mathf.Max(
+            Mathf.Abs(transform.lossyScale.x),
+            Mathf.Abs(transform.lossyScale.y));
+
+        if (scale < 0.01f)
+        {
+            scale = 0.01f;
+        }
+
+        box.offset = new Vector2(local.x, local.y);
+        float size = diameter / scale;
+        box.size = new Vector2(size, size);
     }
 
     private void TryBuild()
@@ -96,7 +226,9 @@ public class BuildPlot : MonoBehaviour
             return;
         }
 
-        if (towerPrefab == null)
+        TowerController chosen = ChosenDefense();
+
+        if (chosen == null)
         {
             Debug.LogError(
                 $"{gameObject.name} has no tower prefab.",
@@ -106,12 +238,12 @@ public class BuildPlot : MonoBehaviour
             return;
         }
 
-        if (!towerPrefab.HasValidConfiguration)
+        if (!chosen.HasValidConfiguration)
         {
             Debug.LogError(
-                $"{towerPrefab.gameObject.name} has no " +
+                $"{chosen.gameObject.name} has no " +
                 "valid TowerData configuration.",
-                towerPrefab
+                chosen
             );
 
             return;
@@ -137,7 +269,7 @@ public class BuildPlot : MonoBehaviour
             return;
         }
 
-        int towerCost = towerPrefab.BuildCost;
+        int towerCost = chosen.BuildCost;
 
         if (towerCost < 0)
         {
@@ -161,10 +293,20 @@ public class BuildPlot : MonoBehaviour
             return;
         }
 
-        BuildTower(towerCost);
+        BuildTower(chosen, towerCost);
     }
 
-    private void BuildTower(int towerCost)
+    private TowerController ChosenDefense()
+    {
+        if (buildSelection != null && buildSelection.Selected != null)
+        {
+            return buildSelection.Selected;
+        }
+
+        return towerPrefab;
+    }
+
+    private void BuildTower(TowerController chosen, int towerCost)
     {
         isBuilding = true;
 
@@ -181,12 +323,14 @@ public class BuildPlot : MonoBehaviour
 
             chargedAmount = towerCost;
 
+            Vector3 spot = BuildSpot();
             tower = Instantiate(
-                towerPrefab,
-                transform.position,
+                chosen,
+                spot,
                 Quaternion.identity,
                 towerContainer
             );
+            tower.transform.position = spot;
 
             if (tower == null)
             {
@@ -247,6 +391,16 @@ public class BuildPlot : MonoBehaviour
             $"{gameObject.name}. " +
             $"Cost: {tower.BuildCost}"
         );
+
+        TowerAppearance appearance =
+            tower.GetComponent<TowerAppearance>();
+
+        if (appearance != null)
+        {
+            appearance.Play();
+        }
+
+        OnTowerBuilt?.Invoke(tower);
     }
 
     private void CancelBuild(

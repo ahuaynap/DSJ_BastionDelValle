@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28927f8c8d304a1b8d9502619cc2625, type: 3}
+  m_Name: TowerData_Condor
+  m_EditorClassIdentifier: Assembly-CSharp::TowerData
+  towerId: tower_condor
+  displayName: "Vig\xEDa del C\xF3ndor"
+  description: "Prioriza amenazas a\xE9reas y tambi\xE9n alcanza a las terrestres"
+  buildCost: 70
+  attackRange: 3.8
+  attackInterval: 1.6
+  projectileDamage: 20
+  projectileSpeed: 10
+  slowMultiplier: 1
+  slowDuration: 0
+  impactMode: 0
+  impactRadius: 0
+  zoneRadius: 0
+  zoneDuration: 0
+  zonePulseDelay: 0
+  allowedTargets: 3
+  aim: 1
+  worldSprite: {fileID: 21300000, guid: 62e0fbced958a410e8bc1026c44359f7, type: 3}
+  icon: {fileID: 0}

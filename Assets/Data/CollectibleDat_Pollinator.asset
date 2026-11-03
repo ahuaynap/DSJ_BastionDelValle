@@ -16,9 +16,9 @@ MonoBehaviour:
   displayName: Mariposa del valle
   category: 2
   shortDescription: Un polinizador esencial para la biodiversidad del valle.
-  educationalContent: "Las mariposas, abejas y otros polinizadores transportan\npolen
-    entre las flores y permiten que numerosas plantas\npuedan reproducirse. Proteger
-    sus h\xE1bitats contribuye a\nmantener la biodiversidad y favorece la producci\xF3n
-    agr\xEDcola."
-  worldSprite: {fileID: 0}
+  educationalContent: "Muchos polinizadores, como abejas y mariposas, transportan
+    polen entre flores y favorecen la reproducci\xF3n de numerosas plantas. Proteger
+    sus h\xE1bitats contribuye a conservar la biodiversidad.\n\nModelo educativo
+    simplificado; no representa con exactitud un ecosistema real."
+  worldSprite: {fileID: 21300000, guid: d8dfb79e991374da69195b18d62aaa1b, type: 3}
   infographicSprite: {fileID: 0}

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2810452088642822088}
   - component: {fileID: 8291810592547373652}
   - component: {fileID: 8350704863288072575}
+  - component: {fileID: 9159309961868400675}
   m_Layer: 5
   m_Name: CodexEntry
   m_TagString: Untagged
@@ -62,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.95686275, b: 0.9019608, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -100,13 +101,13 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_NormalColor: {r: 0.24705882, g: 0.56078434, b: 0.30588236, a: 1}
+    m_HighlightedColor: {r: 0.45788234, g: 0.6837647, b: 0.5002353, a: 1}
+    m_PressedColor: {r: 0.19270588, g: 0.4374118, b: 0.23858824, a: 1}
+    m_SelectedColor: {r: 0.58588237, g: 0.7337255, b: 0.5176471, a: 1}
+    m_DisabledColor: {r: 0.19367647, g: 0.33485296, b: 0.22014706, a: 0.45}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0.08
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -157,6 +158,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CodexEntryView
   button: {fileID: 2810452088642822088}
   label: {fileID: 4258250889028747456}
+--- !u!114 &9159309961868400675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854210830514382163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb198d2cc5dd24021856fdeb5a04e6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UiClickSound
 --- !u!1 &2951522116520990674
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +245,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4279509038
-  m_fontColor: {r: 0.18039216, g: 0.1254902, b: 0.078431375, a: 1}
+  m_fontColor: {r: 1, g: 0.94509804, b: 0.7764706, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

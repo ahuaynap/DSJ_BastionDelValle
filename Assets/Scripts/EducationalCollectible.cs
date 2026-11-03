@@ -9,6 +9,7 @@ public class EducationalCollectible : MonoBehaviour
     private SpriteRenderer worldRenderer;
 
     private Collider2D interactionCollider;
+    private CollectibleVisualMotion visualMotion;
     private GameManager gameManager;
     private PauseManager pauseManager;
     private CollectibleData collectibleData;
@@ -17,6 +18,7 @@ public class EducationalCollectible : MonoBehaviour
 
     private bool isInitialized;
     private bool isFinished;
+    private static bool missingVisualMotionReported;
 
     public CollectibleData Data =>
         collectibleData;
@@ -48,6 +50,22 @@ public class EducationalCollectible : MonoBehaviour
         {
             worldRenderer =
                 GetComponent<SpriteRenderer>();
+        }
+
+        visualMotion =
+            GetComponent<CollectibleVisualMotion>();
+
+        if (visualMotion == null &&
+            !missingVisualMotionReported)
+        {
+            missingVisualMotionReported = true;
+
+            Debug.LogWarning(
+                "EducationalCollectible has no " +
+                "CollectibleVisualMotion. The memory " +
+                "will stay still.",
+                this
+            );
         }
     }
 
@@ -110,6 +128,11 @@ public class EducationalCollectible : MonoBehaviour
         isInitialized = true;
 
         ApplyPresentation();
+
+        if (visualMotion != null)
+        {
+            visualMotion.Initialize(gameManager);
+        }
 
         if (interactionCollider != null)
         {

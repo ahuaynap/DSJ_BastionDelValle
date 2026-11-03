@@ -19,5 +19,5 @@ MonoBehaviour:
   movementSpeed: 2
   reward: 10
   goalDamage: 30
-  worldSprite: {fileID: 0}
+  worldSprite: {fileID: 21300000, guid: f54c547f12c2f405dba81dc765bb93e5, type: 3}
   icon: {fileID: 0}

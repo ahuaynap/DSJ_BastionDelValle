@@ -26,6 +26,11 @@ public class EnemyData : ScriptableObject
     [SerializeField, Min(1)]
     private int goalDamage = 10;
 
+    [SerializeField, Min(0f)]
+    private float bodyRadius;
+
+    [SerializeField] private EnemyTravel travel = EnemyTravel.Ground;
+
     [Header("Presentation")]
     [SerializeField] private Sprite worldSprite;
     [SerializeField] private Sprite icon;
@@ -38,6 +43,9 @@ public class EnemyData : ScriptableObject
     public float MovementSpeed => movementSpeed;
     public int Reward => reward;
     public int GoalDamage => goalDamage;
+    public float BodyRadius => bodyRadius;
+    public EnemyTravel Travel => travel;
+    public bool IsGround => GroundRules.AcceptsZone(travel);
 
     public Sprite WorldSprite => worldSprite;
     public Sprite Icon => icon;

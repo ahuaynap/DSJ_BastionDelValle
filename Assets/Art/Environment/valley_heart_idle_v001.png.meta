@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: 168aa8dc2da0e4667acd5ab6dcf40edb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 707640771493484367
+    second: valley_heart_idle_v001_0
+  - first:
+      213: 9169794937563066378
+    second: valley_heart_idle_v001_1
+  - first:
+      213: 5856697235761070723
+    second: valley_heart_idle_v001_2
+  - first:
+      213: 7501822359216881602
+    second: valley_heart_idle_v001_3
+  - first:
+      213: -3833865764269593430
+    second: valley_heart_idle_v001_4
+  - first:
+      213: 1613724374756738496
+    second: valley_heart_idle_v001_5
+  - first:
+      213: -6732958442036551391
+    second: valley_heart_idle_v001_6
+  - first:
+      213: -5414394840414543519
+    second: valley_heart_idle_v001_7
+  - first:
+      213: 8910629073306375095
+    second: valley_heart_idle_v001_8
+  - first:
+      213: 1209209800874335628
+    second: valley_heart_idle_v001_9
+  - first:
+      213: -1674058643693671880
+    second: valley_heart_idle_v001_10
+  - first:
+      213: 2872191645637347342
+    second: valley_heart_idle_v001_11
+  - first:
+      213: -6980483927810860878
+    second: valley_heart_idle_v001_12
+  - first:
+      213: 4144187457417782195
+    second: valley_heart_idle_v001_13
+  - first:
+      213: -201553974322971607
+    second: valley_heart_idle_v001_14
+  - first:
+      213: -8108969772151564645
+    second: valley_heart_idle_v001_15
+  - first:
+      213: -1448719472956382009
+    second: valley_heart_idle_v001_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 650
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1491
+        height: 980
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f47d37d488b02d900800000000000000
+      internalID: 707640771493484367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_1
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 97
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a003f9c79e7a14f70800000000000000
+      internalID: 9169794937563066378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_2
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 79
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3820d861b1b274150800000000000000
+      internalID: 5856697235761070723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_3
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 85
+        width: 21
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cf743970b3db1860800000000000000
+      internalID: 7501822359216881602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_4
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 111
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaced2c666f5bcac0800000000000000
+      internalID: -3833865764269593430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_5
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 77
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c5c3cad4c9156610800000000000000
+      internalID: 1613724374756738496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_6
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 119
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 121a1fe38f9bf82a0800000000000000
+      internalID: -6732958442036551391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_7
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 77
+        width: 18
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 161226f44943cd4b0800000000000000
+      internalID: -5414394840414543519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_8
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 103
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b3d1bf7ee9e8ab70800000000000000
+      internalID: 8910629073306375095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_9
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 117
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8d190048e9f7c010800000000000000
+      internalID: 1209209800874335628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_10
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 135
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83a6779788c84c8e0800000000000000
+      internalID: -1674058643693671880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_11
+      rect:
+        serializedVersion: 2
+        x: 1074
+        y: 146
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e080f0d85131cd720800000000000000
+      internalID: 2872191645637347342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_12
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 143
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b892821ad6502f90800000000000000
+      internalID: -6980483927810860878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_13
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 111
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b32402298c138930800000000000000
+      internalID: 4144187457417782195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_14
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 163
+        width: 31
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92c396d6abfe33df0800000000000000
+      internalID: -201553974322971607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_15
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 143
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b96968494f6277f80800000000000000
+      internalID: -8108969772151564645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: valley_heart_idle_v001_16
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 199
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c46e33a05d15ebe0800000000000000
+      internalID: -1448719472956382009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      valley_heart_idle_v001_0: 707640771493484367
+      valley_heart_idle_v001_1: 9169794937563066378
+      valley_heart_idle_v001_10: -1674058643693671880
+      valley_heart_idle_v001_11: 2872191645637347342
+      valley_heart_idle_v001_12: -6980483927810860878
+      valley_heart_idle_v001_13: 4144187457417782195
+      valley_heart_idle_v001_14: -201553974322971607
+      valley_heart_idle_v001_15: -8108969772151564645
+      valley_heart_idle_v001_16: -1448719472956382009
+      valley_heart_idle_v001_2: 5856697235761070723
+      valley_heart_idle_v001_3: 7501822359216881602
+      valley_heart_idle_v001_4: -3833865764269593430
+      valley_heart_idle_v001_5: 1613724374756738496
+      valley_heart_idle_v001_6: -6732958442036551391
+      valley_heart_idle_v001_7: -5414394840414543519
+      valley_heart_idle_v001_8: 8910629073306375095
+      valley_heart_idle_v001_9: 1209209800874335628
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

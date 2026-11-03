@@ -13,12 +13,22 @@ MonoBehaviour:
   m_Name: TowerData_Basic
   m_EditorClassIdentifier: Assembly-CSharp::TowerData
   towerId: tower_basic
-  displayName: Basic Tower
-  description: Torre graybox utilizada para validar el combate.
-  buildCost: 40
+  displayName: Guardian Semilla
+  description: "Guardi\xE1n vegetal que lanza semillas de energ\xEDa contra una amenaza
+    a la vez"
+  buildCost: 30
   attackRange: 2.1
   attackInterval: 1
   projectileDamage: 10
   projectileSpeed: 8
-  worldSprite: {fileID: 0}
+  slowMultiplier: 1
+  slowDuration: 0
+  impactMode: 0
+  impactRadius: 0
+  zoneRadius: 0
+  zoneDuration: 0
+  zonePulseDelay: 0
+  allowedTargets: 3
+  aim: 0
+  worldSprite: {fileID: 21300000, guid: 04b34b5f29d3f47ab8aaf0f4836d1a4a, type: 3}
   icon: {fileID: 0}

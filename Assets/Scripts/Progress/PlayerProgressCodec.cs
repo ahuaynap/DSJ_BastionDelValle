@@ -6,18 +6,68 @@ using UnityEngine;
 
 public static class PlayerProgressCodec
 {
-    public const int SupportedSchemaVersion = 1;
+    public const int LegacySchemaVersion = 1;
+    public const int AudioSchemaVersion = 2;
+    public const int SupportedSchemaVersion = 3;
+    public const float DefaultMusicVolume = 0.35f;
+    public const float DefaultEffectsVolume = 0.8f;
 
     public static string Serialize(
-        IReadOnlyList<string> discoveredIds)
+        IReadOnlyList<string> discoveredIds,
+        float musicVolume,
+        float effectsVolume)
+    {
+        return Serialize(
+            discoveredIds,
+            musicVolume,
+            effectsVolume,
+            CampaignSnapshot.Empty);
+    }
+
+    public static string Serialize(
+        IReadOnlyList<string> discoveredIds,
+        float musicVolume,
+        float effectsVolume,
+        CampaignSnapshot campaign)
     {
         PlayerProgressData data = new PlayerProgressData
         {
             schemaVersion = SupportedSchemaVersion,
-            discoveredIds = NormalizeIds(discoveredIds)
+            discoveredIds = NormalizeIds(discoveredIds),
+            musicVolume = ClampVolume(musicVolume),
+            effectsVolume = ClampVolume(effectsVolume),
+            campaignStarted = campaign.Started,
+            completedMaps = CopyIds(campaign.CompletedMaps),
+            clearedTutorials = CopyIds(campaign.ClearedTutorials),
+            evaluations = CopyIds(campaign.Evaluations)
         };
 
         return JsonUtility.ToJson(data, true);
+    }
+
+    public static List<string> CopyIds(IReadOnlyList<string> values)
+    {
+        return NormalizeIds(values);
+    }
+
+    public static float ClampVolume(float value)
+    {
+        if (float.IsNaN(value) || float.IsInfinity(value))
+        {
+            return 0f;
+        }
+
+        if (value < 0f)
+        {
+            return 0f;
+        }
+
+        if (value > 1f)
+        {
+            return 1f;
+        }
+
+        return value;
     }
 
     public static List<string> NormalizeIds(
@@ -53,17 +103,71 @@ public static class PlayerProgressCodec
     {
         try
         {
-            List<string> rawIds = ReadDocument(json);
-            List<string> normalized = NormalizeIds(rawIds);
+            ParsedDocument document = ReadDocument(json);
+            List<string> normalized = NormalizeIds(document.Ids);
 
-            if (!MatchesJsonUtility(json, normalized))
+            if (document.Legacy)
+            {
+                if (!MatchesDiscoveries(
+                        json,
+                        LegacySchemaVersion,
+                        normalized))
+                {
+                    return ProgressParseResult.Failed(
+                        ProgressFileProblem.InvalidStructure,
+                        "Progress JSON did not match schema 1.");
+                }
+
+                return ProgressParseResult.Valid(
+                    normalized,
+                    DefaultMusicVolume,
+                    DefaultEffectsVolume,
+                    true,
+                    true,
+                    CampaignSnapshot.Empty);
+            }
+
+            if (document.AudioSchema)
+            {
+                if (!MatchesAudio(
+                        json,
+                        normalized,
+                        document.MusicVolume,
+                        document.EffectsVolume))
+                {
+                    return ProgressParseResult.Failed(
+                        ProgressFileProblem.InvalidStructure,
+                        "Progress JSON did not match schema 2.");
+                }
+
+                return ProgressParseResult.Valid(
+                    normalized,
+                    document.MusicVolume,
+                    document.EffectsVolume,
+                    false,
+                    true,
+                    CampaignSnapshot.Empty);
+            }
+
+            if (!MatchesCurrent(
+                    json,
+                    normalized,
+                    document.MusicVolume,
+                    document.EffectsVolume,
+                    document.Campaign))
             {
                 return ProgressParseResult.Failed(
                     ProgressFileProblem.InvalidStructure,
                     "Progress JSON did not match the supported schema.");
             }
 
-            return ProgressParseResult.Valid(normalized);
+            return ProgressParseResult.Valid(
+                normalized,
+                document.MusicVolume,
+                document.EffectsVolume,
+                false,
+                false,
+                document.Campaign);
         }
         catch (ProgressParseException exception)
         {
@@ -73,15 +177,16 @@ public static class PlayerProgressCodec
         }
     }
 
-    private static bool MatchesJsonUtility(
+    private static bool MatchesDiscoveries(
         string json,
+        int expectedSchema,
         IReadOnlyList<string> normalizedIds)
     {
         PlayerProgressData data =
             JsonUtility.FromJson<PlayerProgressData>(json);
 
         if (data == null ||
-            data.schemaVersion != SupportedSchemaVersion)
+            data.schemaVersion != expectedSchema)
         {
             return false;
         }
@@ -108,7 +213,97 @@ public static class PlayerProgressCodec
         return true;
     }
 
-    private static List<string> ReadDocument(string json)
+    private static bool MatchesAudio(
+        string json,
+        IReadOnlyList<string> normalizedIds,
+        float musicVolume,
+        float effectsVolume)
+    {
+        if (!MatchesDiscoveries(
+                json,
+                AudioSchemaVersion,
+                normalizedIds))
+        {
+            return false;
+        }
+
+        PlayerProgressData data =
+            JsonUtility.FromJson<PlayerProgressData>(json);
+
+        return data != null &&
+            VolumesMatch(data.musicVolume, musicVolume) &&
+            VolumesMatch(data.effectsVolume, effectsVolume);
+    }
+
+    private static bool MatchesCurrent(
+        string json,
+        IReadOnlyList<string> normalizedIds,
+        float musicVolume,
+        float effectsVolume,
+        CampaignSnapshot campaign)
+    {
+        if (!MatchesDiscoveries(
+                json,
+                SupportedSchemaVersion,
+                normalizedIds))
+        {
+            return false;
+        }
+
+        PlayerProgressData data =
+            JsonUtility.FromJson<PlayerProgressData>(json);
+
+        return data != null &&
+            VolumesMatch(data.musicVolume, musicVolume) &&
+            VolumesMatch(data.effectsVolume, effectsVolume) &&
+            data.campaignStarted == campaign.Started &&
+            SameIds(data.completedMaps, campaign.CompletedMaps) &&
+            SameIds(data.clearedTutorials, campaign.ClearedTutorials) &&
+            SameIds(data.evaluations, campaign.Evaluations);
+    }
+
+    private static bool SameIds(
+        IReadOnlyList<string> left,
+        IReadOnlyList<string> right)
+    {
+        List<string> normalizedLeft = NormalizeIds(left);
+        List<string> normalizedRight = NormalizeIds(right);
+
+        if (normalizedLeft.Count != normalizedRight.Count)
+        {
+            return false;
+        }
+
+        for (int index = 0; index < normalizedLeft.Count; index++)
+        {
+            if (!string.Equals(
+                    normalizedLeft[index],
+                    normalizedRight[index],
+                    StringComparison.Ordinal))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool VolumesMatch(float left, float right)
+    {
+        return Math.Abs(left - right) <= 0.0001f;
+    }
+
+    private struct ParsedDocument
+    {
+        public bool Legacy;
+        public bool AudioSchema;
+        public List<string> Ids;
+        public float MusicVolume;
+        public float EffectsVolume;
+        public CampaignSnapshot Campaign;
+    }
+
+    private static ParsedDocument ReadDocument(string json)
     {
         JsonText text = new JsonText(json);
         text.SkipWhitespace();
@@ -137,11 +332,9 @@ public static class PlayerProgressCodec
                 "schemaVersion is missing.");
         }
 
-        ProgressFileProblem schemaProblem =
-            ClassifySchema(root.SchemaRaw);
+        SchemaClass schemaClass = ClassifySchema(root.SchemaRaw);
 
-        if (schemaProblem ==
-            ProgressFileProblem.UnsupportedSchema)
+        if (schemaClass == SchemaClass.Unsupported)
         {
             throw new ProgressParseException(
                 ProgressFileProblem.UnsupportedSchema,
@@ -149,12 +342,11 @@ public static class PlayerProgressCodec
                 SupportedSchemaVersion + ".");
         }
 
-        if (schemaProblem != ProgressFileProblem.None)
+        if (schemaClass == SchemaClass.Invalid)
         {
             throw new ProgressParseException(
-                schemaProblem,
-                "schemaVersion is not supported version " +
-                SupportedSchemaVersion + ".");
+                ProgressFileProblem.InvalidStructure,
+                "schemaVersion is not a supported version.");
         }
 
         if (root.IdsRaw == null)
@@ -164,10 +356,143 @@ public static class PlayerProgressCodec
                 "discoveredIds is missing.");
         }
 
-        return ReadIds(root.IdsRaw);
+        ParsedDocument document = new ParsedDocument
+        {
+            Legacy = schemaClass == SchemaClass.Legacy,
+            Ids = ReadIds(root.IdsRaw),
+            MusicVolume = DefaultMusicVolume,
+            EffectsVolume = DefaultEffectsVolume
+        };
+
+        if (schemaClass == SchemaClass.Legacy)
+        {
+            return document;
+        }
+
+        if (root.MusicRaw == null || root.EffectsRaw == null)
+        {
+            throw new ProgressParseException(
+                ProgressFileProblem.InvalidStructure,
+                "schema 2 requires musicVolume and effectsVolume.");
+        }
+
+        document.MusicVolume = ReadUnitVolume(
+            root.MusicRaw,
+            "musicVolume");
+        document.EffectsVolume = ReadUnitVolume(
+            root.EffectsRaw,
+            "effectsVolume");
+
+        if (schemaClass == SchemaClass.Audio)
+        {
+            document.AudioSchema = true;
+            document.Campaign = CampaignSnapshot.Empty;
+            return document;
+        }
+
+        if (root.StartedRaw == null ||
+            root.MapsRaw == null ||
+            root.TutorialsRaw == null ||
+            root.EvaluationsRaw == null)
+        {
+            throw new ProgressParseException(
+                ProgressFileProblem.InvalidStructure,
+                "schema 3 requires the campaign fields.");
+        }
+
+        document.Campaign = new CampaignSnapshot(
+            ReadBool(root.StartedRaw, "campaignStarted"),
+            ReadIds(root.MapsRaw, "completedMaps"),
+            ReadIds(root.TutorialsRaw, "clearedTutorials"),
+            ReadIds(root.EvaluationsRaw, "evaluations"));
+        return document;
     }
 
-    private static ProgressFileProblem ClassifySchema(
+    private static string AssignOnce(
+        string current,
+        string rawValue,
+        string fieldName)
+    {
+        if (current != null)
+        {
+            throw new ProgressParseException(
+                ProgressFileProblem.InvalidStructure,
+                fieldName + " is duplicated.");
+        }
+
+        return rawValue;
+    }
+
+    private static bool ReadBool(string rawValue, string fieldName)
+    {
+        string token = rawValue.Trim();
+
+        if (token == "true")
+        {
+            return true;
+        }
+
+        if (token == "false")
+        {
+            return false;
+        }
+
+        throw new ProgressParseException(
+            ProgressFileProblem.InvalidStructure,
+            fieldName + " must be true or false.");
+    }
+
+    private static float ReadUnitVolume(
+        string rawValue,
+        string fieldName)
+    {
+        JsonText text = new JsonText(rawValue);
+        text.SkipWhitespace();
+
+        if (!text.TryReadNumber(out string token))
+        {
+            throw new ProgressParseException(
+                ProgressFileProblem.InvalidStructure,
+                fieldName + " must be a number from 0 to 1.");
+        }
+
+        text.SkipWhitespace();
+
+        if (!text.End)
+        {
+            throw new ProgressParseException(
+                ProgressFileProblem.InvalidJson,
+                fieldName + " has trailing content.");
+        }
+
+        if (!double.TryParse(
+                token,
+                NumberStyles.Float,
+                CultureInfo.InvariantCulture,
+                out double number) ||
+            double.IsNaN(number) ||
+            double.IsInfinity(number) ||
+            number < 0d ||
+            number > 1d)
+        {
+            throw new ProgressParseException(
+                ProgressFileProblem.InvalidStructure,
+                fieldName + " must be a number from 0 to 1.");
+        }
+
+        return (float)number;
+    }
+
+    private enum SchemaClass
+    {
+        Current,
+        Audio,
+        Legacy,
+        Unsupported,
+        Invalid
+    }
+
+    private static SchemaClass ClassifySchema(
         string rawValue)
     {
         JsonText text = new JsonText(rawValue);
@@ -175,14 +500,14 @@ public static class PlayerProgressCodec
 
         if (!text.TryReadNumber(out string token))
         {
-            return ProgressFileProblem.InvalidStructure;
+            return SchemaClass.Invalid;
         }
 
         text.SkipWhitespace();
 
         if (!text.End)
         {
-            return ProgressFileProblem.InvalidJson;
+            return SchemaClass.Invalid;
         }
 
         if (IsCanonicalInteger(token) &&
@@ -194,15 +519,25 @@ public static class PlayerProgressCodec
         {
             if (integer == SupportedSchemaVersion)
             {
-                return ProgressFileProblem.None;
+                return SchemaClass.Current;
+            }
+
+            if (integer == AudioSchemaVersion)
+            {
+                return SchemaClass.Audio;
+            }
+
+            if (integer == LegacySchemaVersion)
+            {
+                return SchemaClass.Legacy;
             }
 
             if (integer > SupportedSchemaVersion)
             {
-                return ProgressFileProblem.UnsupportedSchema;
+                return SchemaClass.Unsupported;
             }
 
-            return ProgressFileProblem.InvalidStructure;
+            return SchemaClass.Invalid;
         }
 
         if (double.TryParse(
@@ -212,10 +547,10 @@ public static class PlayerProgressCodec
                 out double number) &&
             number > SupportedSchemaVersion)
         {
-            return ProgressFileProblem.UnsupportedSchema;
+            return SchemaClass.Unsupported;
         }
 
-        return ProgressFileProblem.InvalidStructure;
+        return SchemaClass.Invalid;
     }
 
     private static bool IsCanonicalInteger(string token)
@@ -268,6 +603,20 @@ public static class PlayerProgressCodec
         return ids;
     }
 
+    private static List<string> ReadIds(string rawValue, string fieldName)
+    {
+        try
+        {
+            return ReadIds(rawValue);
+        }
+        catch (ProgressParseException)
+        {
+            throw new ProgressParseException(
+                ProgressFileProblem.InvalidStructure,
+                fieldName + " must be a list of strings.");
+        }
+    }
+
     private sealed class ProgressParseException : Exception
     {
         public ProgressFileProblem Problem { get; }
@@ -284,6 +633,12 @@ public static class PlayerProgressCodec
     {
         public string SchemaRaw;
         public string IdsRaw;
+        public string MusicRaw;
+        public string EffectsRaw;
+        public string StartedRaw;
+        public string MapsRaw;
+        public string TutorialsRaw;
+        public string EvaluationsRaw;
     }
 
     private sealed class JsonText
@@ -426,6 +781,56 @@ public static class PlayerProgressCodec
                     }
 
                     parsed.IdsRaw = rawValue;
+                }
+                else if (key == "musicVolume")
+                {
+                    if (parsed.MusicRaw != null)
+                    {
+                        throw new ProgressParseException(
+                            ProgressFileProblem.InvalidStructure,
+                            "musicVolume is duplicated.");
+                    }
+
+                    parsed.MusicRaw = rawValue;
+                }
+                else if (key == "effectsVolume")
+                {
+                    if (parsed.EffectsRaw != null)
+                    {
+                        throw new ProgressParseException(
+                            ProgressFileProblem.InvalidStructure,
+                            "effectsVolume is duplicated.");
+                    }
+
+                    parsed.EffectsRaw = rawValue;
+                }
+                else if (key == "campaignStarted")
+                {
+                    parsed.StartedRaw = AssignOnce(
+                        parsed.StartedRaw,
+                        rawValue,
+                        "campaignStarted");
+                }
+                else if (key == "completedMaps")
+                {
+                    parsed.MapsRaw = AssignOnce(
+                        parsed.MapsRaw,
+                        rawValue,
+                        "completedMaps");
+                }
+                else if (key == "clearedTutorials")
+                {
+                    parsed.TutorialsRaw = AssignOnce(
+                        parsed.TutorialsRaw,
+                        rawValue,
+                        "clearedTutorials");
+                }
+                else if (key == "evaluations")
+                {
+                    parsed.EvaluationsRaw = AssignOnce(
+                        parsed.EvaluationsRaw,
+                        rawValue,
+                        "evaluations");
                 }
 
                 SkipWhitespace();

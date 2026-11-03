@@ -9,7 +9,13 @@ public class TowerController : MonoBehaviour
     [SerializeField] private TowerTargeting towerTargeting;
     [SerializeField] private TowerAttack towerAttack;
 
+    [Header("Presentation")]
+    [SerializeField] private SpriteRenderer worldRenderer;
+
     private bool isInitialized;
+    private bool missingRendererReported;
+    private bool synergyListening;
+    private SpriteRenderer synergyMark;
 
     public TowerData Data => towerData;
 
@@ -106,8 +112,98 @@ public class TowerController : MonoBehaviour
             return false;
         }
 
+        ApplyPresentation();
+
         isInitialized = true;
+        ListenSynergy();
+        HabitatSession.Active?.Register(this);
         return true;
+    }
+
+    private void OnDestroy()
+    {
+        if (HabitatSession.Active == null)
+        {
+            return;
+        }
+
+        if (synergyListening)
+        {
+            HabitatSession.Active.SynergiesChanged -= RefreshMark;
+        }
+
+        HabitatSession.Active.Unregister(this);
+    }
+
+    private void ListenSynergy()
+    {
+        if (synergyListening || HabitatSession.Active == null)
+        {
+            return;
+        }
+
+        HabitatSession.Active.SynergiesChanged += RefreshMark;
+        synergyListening = true;
+        EnsureMark();
+    }
+
+    private void RefreshMark()
+    {
+        if (synergyMark == null)
+        {
+            return;
+        }
+
+        synergyMark.enabled = HabitatSession.Active != null &&
+            HabitatSession.Active.HasSynergy(this);
+    }
+
+    private void EnsureMark()
+    {
+        if (synergyMark != null)
+        {
+            return;
+        }
+
+        var marker = new GameObject("SynergyMark");
+        marker.transform.SetParent(transform, false);
+        marker.transform.localPosition = new Vector3(0.42f, 0.42f, 0f);
+        marker.transform.localScale = new Vector3(0.22f, 0.22f, 1f);
+        synergyMark = marker.AddComponent<SpriteRenderer>();
+        synergyMark.sprite = HabitatSession.MarkerSprite();
+        synergyMark.color = new Color(0.95f, 0.84f, 0.42f, 0.95f);
+        synergyMark.sortingOrder = worldRenderer != null
+            ? worldRenderer.sortingOrder + 2
+            : 8;
+        synergyMark.enabled = false;
+    }
+
+    private void ApplyPresentation()
+    {
+        if (worldRenderer == null)
+        {
+            if (missingRendererReported)
+            {
+                return;
+            }
+
+            missingRendererReported = true;
+            Debug.LogWarning(
+                $"{gameObject.name} has no world " +
+                "SpriteRenderer. The temporary tower " +
+                "graphic stays.",
+                this
+            );
+
+            return;
+        }
+
+        if (towerData.WorldSprite == null)
+        {
+            return;
+        }
+
+        worldRenderer.sprite = towerData.WorldSprite;
     }
 
     private void OnValidate()

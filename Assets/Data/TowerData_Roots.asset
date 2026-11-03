@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28927f8c8d304a1b8d9502619cc2625, type: 3}
+  m_Name: TowerData_Roots
+  m_EditorClassIdentifier: Assembly-CSharp::TowerData
+  towerId: tower_roots
+  displayName: "Terraza de Ra\xEDces"
+  description: "Da\xF1a y frena enemigos terrestres en una zona"
+  buildCost: 50
+  attackRange: 1.8
+  attackInterval: 2
+  projectileDamage: 3
+  projectileSpeed: 6
+  slowMultiplier: 0.75
+  slowDuration: 0
+  impactMode: 0
+  impactRadius: 0
+  zoneRadius: 0.6
+  zoneDuration: 1.5
+  zonePulseDelay: 0.75
+  allowedTargets: 1
+  aim: 0
+  worldSprite: {fileID: 21300000, guid: 4206eb14ced6d4e36bf99d0fa966592e, type: 3}
+  icon: {fileID: 0}

@@ -1,7 +1,8 @@
 {
     "name": "BastionDelValle.EditModeTests",
     "references": [
-        "BastionDelValle.Progress"
+        "BastionDelValle.Progress",
+        "BastionDelValle.Navigation"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"

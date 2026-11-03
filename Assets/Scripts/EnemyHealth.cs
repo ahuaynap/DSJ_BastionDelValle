@@ -27,6 +27,7 @@ public class EnemyHealth : MonoBehaviour
     public bool IsInitialized => isInitialized;
 
     public event Action<EnemyHealth> OnDeath;
+    public event Action<EnemyHealth> OnDamaged;
 
     public void Initialize(EnemyData data)
     {
@@ -81,6 +82,8 @@ public class EnemyHealth : MonoBehaviour
             $"{gameObject.name} received {damage} damage. " +
             $"Health: {currentHealth}/{MaxHealth}"
         );
+
+        OnDamaged?.Invoke(this);
 
         if (currentHealth == 0)
         {

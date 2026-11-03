@@ -1,0 +1,1508 @@
+fileFormatVersion: 2
+guid: 41ff53a7ad8ca468e9f8a516b2a15a52
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4746742330600355320
+    second: decor_terrace_stones_v001_0
+  - first:
+      213: -4199876145400065654
+    second: decor_terrace_stones_v001_1
+  - first:
+      213: 7261844887857238952
+    second: decor_terrace_stones_v001_2
+  - first:
+      213: -6666253547321419141
+    second: decor_terrace_stones_v001_3
+  - first:
+      213: 7269450532398988512
+    second: decor_terrace_stones_v001_4
+  - first:
+      213: 2974753342891833524
+    second: decor_terrace_stones_v001_5
+  - first:
+      213: 1727107410216427094
+    second: decor_terrace_stones_v001_6
+  - first:
+      213: 4254576027244626324
+    second: decor_terrace_stones_v001_7
+  - first:
+      213: 3128660628631267624
+    second: decor_terrace_stones_v001_8
+  - first:
+      213: 176789821623941321
+    second: decor_terrace_stones_v001_9
+  - first:
+      213: -2530133068618270531
+    second: decor_terrace_stones_v001_10
+  - first:
+      213: 6101123574804037056
+    second: decor_terrace_stones_v001_11
+  - first:
+      213: 2206730404387598644
+    second: decor_terrace_stones_v001_12
+  - first:
+      213: 8396393005094893901
+    second: decor_terrace_stones_v001_13
+  - first:
+      213: -1724385147067525551
+    second: decor_terrace_stones_v001_14
+  - first:
+      213: 3795297185935636366
+    second: decor_terrace_stones_v001_15
+  - first:
+      213: -5729710924907254924
+    second: decor_terrace_stones_v001_16
+  - first:
+      213: -1438605315363804512
+    second: decor_terrace_stones_v001_17
+  - first:
+      213: 5670662966120266361
+    second: decor_terrace_stones_v001_18
+  - first:
+      213: 302537797397115802
+    second: decor_terrace_stones_v001_19
+  - first:
+      213: -3846144111284214465
+    second: decor_terrace_stones_v001_20
+  - first:
+      213: -6900054683380572795
+    second: decor_terrace_stones_v001_21
+  - first:
+      213: 2835552568149458906
+    second: decor_terrace_stones_v001_22
+  - first:
+      213: -5965150895204782837
+    second: decor_terrace_stones_v001_23
+  - first:
+      213: 2940815035762292452
+    second: decor_terrace_stones_v001_24
+  - first:
+      213: -6232458845593563013
+    second: decor_terrace_stones_v001_25
+  - first:
+      213: 1881788511354752884
+    second: decor_terrace_stones_v001_26
+  - first:
+      213: 2033887674461119615
+    second: decor_terrace_stones_v001_27
+  - first:
+      213: 6436526540735776176
+    second: decor_terrace_stones_v001_28
+  - first:
+      213: -2756629869906542940
+    second: decor_terrace_stones_v001_29
+  - first:
+      213: 2126946751124559018
+    second: decor_terrace_stones_v001_30
+  - first:
+      213: -344125882535055186
+    second: decor_terrace_stones_v001_31
+  - first:
+      213: -4983586252361243131
+    second: decor_terrace_stones_v001_32
+  - first:
+      213: 3668819666828549515
+    second: decor_terrace_stones_v001_33
+  - first:
+      213: 275514359544728691
+    second: decor_terrace_stones_v001_34
+  - first:
+      213: 908384266298713821
+    second: decor_terrace_stones_v001_35
+  - first:
+      213: 4643721639960624616
+    second: decor_terrace_stones_v001_36
+  - first:
+      213: -4470899879138170177
+    second: decor_terrace_stones_v001_37
+  - first:
+      213: -7303652650612729745
+    second: decor_terrace_stones_v001_38
+  - first:
+      213: -85857071423116962
+    second: decor_terrace_stones_v001_39
+  - first:
+      213: -1734924959726668924
+    second: decor_terrace_stones_v001_40
+  - first:
+      213: -4859289068040581031
+    second: decor_terrace_stones_v001_41
+  - first:
+      213: 5712784497663626841
+    second: decor_terrace_stones_v001_42
+  - first:
+      213: 2531125363630139023
+    second: decor_terrace_stones_v001_43
+  - first:
+      213: -8440048988404112579
+    second: decor_terrace_stones_v001_44
+  - first:
+      213: 5471638131517804388
+    second: decor_terrace_stones_v001_45
+  - first:
+      213: 6640360333365896942
+    second: decor_terrace_stones_v001_46
+  - first:
+      213: -2864402113248388954
+    second: decor_terrace_stones_v001_47
+  - first:
+      213: 8390577247770585545
+    second: decor_terrace_stones_v001_48
+  - first:
+      213: -288008854902468468
+    second: decor_terrace_stones_v001_49
+  - first:
+      213: 7287193532171179638
+    second: decor_terrace_stones_v001_50
+  - first:
+      213: 3791080521474909889
+    second: decor_terrace_stones_v001_51
+  - first:
+      213: 732043100231222154
+    second: decor_terrace_stones_v001_52
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 500
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 556
+        width: 269
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f57eb71001dfd140800000000000000
+      internalID: 4746742330600355320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_1
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 677
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a81daccc5ea07b5c0800000000000000
+      internalID: -4199876145400065654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_2
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 572
+        width: 247
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a397ba537147c460800000000000000
+      internalID: 7261844887857238952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_3
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 634
+        width: 17
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7a1831d7b5bc73a0800000000000000
+      internalID: -6666253547321419141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_4
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 628
+        width: 78
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ec7ae77eb642e460800000000000000
+      internalID: 7269450532398988512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_5
+      rect:
+        serializedVersion: 2
+        x: 1164
+        y: 628
+        width: 100
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b839798762784920800000000000000
+      internalID: 2974753342891833524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_6
+      rect:
+        serializedVersion: 2
+        x: 1297
+        y: 620
+        width: 106
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65e15eaf90be7f710800000000000000
+      internalID: 1727107410216427094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_7
+      rect:
+        serializedVersion: 2
+        x: 1478
+        y: 683
+        width: 35
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4910fc5ea5a4b0b30800000000000000
+      internalID: 4254576027244626324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_8
+      rect:
+        serializedVersion: 2
+        x: 1601
+        y: 638
+        width: 57
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8292150f34c3b6b20800000000000000
+      internalID: 3128660628631267624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_9
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 580
+        width: 19
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c8bcc5f765147200800000000000000
+      internalID: 176789821623941321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_10
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 631
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db8f98a116923ecd0800000000000000
+      internalID: -2530133068618270531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_11
+      rect:
+        serializedVersion: 2
+        x: 957
+        y: 626
+        width: 207
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cdb4fee09b8ba450800000000000000
+      internalID: 6101123574804037056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_12
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 645
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 431b39c6c91ef9e10800000000000000
+      internalID: 2206730404387598644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_13
+      rect:
+        serializedVersion: 2
+        x: 1164
+        y: 648
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d49714fb3faf58470800000000000000
+      internalID: 8396393005094893901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_14
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 570
+        width: 130
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 156941d48d0c118e0800000000000000
+      internalID: -1724385147067525551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_15
+      rect:
+        serializedVersion: 2
+        x: 1577
+        y: 642
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e87bbb8aeaa9ba430800000000000000
+      internalID: 3795297185935636366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_16
+      rect:
+        serializedVersion: 2
+        x: 1589
+        y: 618
+        width: 21
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47b6a37654afb70b0800000000000000
+      internalID: -5729710924907254924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_17
+      rect:
+        serializedVersion: 2
+        x: 1713
+        y: 644
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aa60c5761c090ce0800000000000000
+      internalID: -1438605315363804512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_18
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 628
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97abf885ced32be40800000000000000
+      internalID: 5670662966120266361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_19
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 626
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a93fbf81684d23400800000000000000
+      internalID: 302537797397115802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_20
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 618
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f35a1fbfe40cf9ac0800000000000000
+      internalID: -3846144111284214465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_21
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 626
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58d9452d2d41e30a0800000000000000
+      internalID: -6900054683380572795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_22
+      rect:
+        serializedVersion: 2
+        x: 1545
+        y: 626
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adfbe7e8908e95720800000000000000
+      internalID: 2835552568149458906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_23
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 570
+        width: 48
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0d27b39dd6873da0800000000000000
+      internalID: -5965150895204782837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_24
+      rect:
+        serializedVersion: 2
+        x: 1904
+        y: 578
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e63db4a1bfdfc820800000000000000
+      internalID: 2940815035762292452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_25
+      rect:
+        serializedVersion: 2
+        x: 1947
+        y: 570
+        width: 115
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b70972f63bbd189a0800000000000000
+      internalID: -6232458845593563013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_26
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1958
+        height: 573
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47f06b15ea47d1a10800000000000000
+      internalID: 1881788511354752884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_27
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 27
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f74ec4d5012d93c10800000000000000
+      internalID: 2033887674461119615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_28
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 15
+        width: 17
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b50eef59c2235950800000000000000
+      internalID: 6436526540735776176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_29
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 31
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ae3df21dbb7eb9d0800000000000000
+      internalID: -2756629869906542940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_30
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 25
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa453f41dce648d10800000000000000
+      internalID: 2126946751124559018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_31
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 7
+        width: 33
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea0fa75455b693bf0800000000000000
+      internalID: -344125882535055186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_32
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 47
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 506ec7825beb6dab0800000000000000
+      internalID: -4983586252361243131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_33
+      rect:
+        serializedVersion: 2
+        x: 565
+        y: 23
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8d584a7c044ae230800000000000000
+      internalID: 3668819666828549515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_34
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 43
+        width: 6
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37cce2ba9d2d2d300800000000000000
+      internalID: 275514359544728691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_35
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 43
+        width: 8
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd6e9486daa3b9c00800000000000000
+      internalID: 908384266298713821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_36
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 25
+        width: 9
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8edb5a16a30d17040800000000000000
+      internalID: 4643721639960624616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_37
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 30
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbae1ad6f3c24f1c0800000000000000
+      internalID: -4470899879138170177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_38
+      rect:
+        serializedVersion: 2
+        x: 973
+        y: 31
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6853655c9634aa90800000000000000
+      internalID: -7303652650612729745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_39
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 22
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e59ae5cc279fecef0800000000000000
+      internalID: -85857071423116962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_40
+      rect:
+        serializedVersion: 2
+        x: 1371
+        y: 51
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 483788fe0fe4ce7e0800000000000000
+      internalID: -1734924959726668924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_41
+      rect:
+        serializedVersion: 2
+        x: 1376
+        y: 39
+        width: 15
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95090869656509cb0800000000000000
+      internalID: -4859289068040581031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_42
+      rect:
+        serializedVersion: 2
+        x: 1577
+        y: 55
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95e4995ab33e74f40800000000000000
+      internalID: 5712784497663626841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_43
+      rect:
+        serializedVersion: 2
+        x: 1613
+        y: 15
+        width: 17
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f86e7259b1d502320800000000000000
+      internalID: 2531125363630139023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_44
+      rect:
+        serializedVersion: 2
+        x: 1637
+        y: 31
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d33274f892ceeda80800000000000000
+      internalID: -8440048988404112579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_45
+      rect:
+        serializedVersion: 2
+        x: 1647
+        y: 33
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46fc99004e92feb40800000000000000
+      internalID: 5471638131517804388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_46
+      rect:
+        serializedVersion: 2
+        x: 1969
+        y: 31
+        width: 190
+        height: 454
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee66ed28a8c472c50800000000000000
+      internalID: 6640360333365896942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_47
+      rect:
+        serializedVersion: 2
+        x: 2091
+        y: 234
+        width: 10
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a893f944799f38d0800000000000000
+      internalID: -2864402113248388954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_48
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 23
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c927d93d81517470800000000000000
+      internalID: 8390577247770585545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_49
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 0
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c801f5fe879c00cf0800000000000000
+      internalID: -288008854902468468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_50
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 13
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 676569688ef412560800000000000000
+      internalID: 7287193532171179638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_51
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 7
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c62a65f5af9c9430800000000000000
+      internalID: 3791080521474909889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: decor_terrace_stones_v001_52
+      rect:
+        serializedVersion: 2
+        x: 1309
+        y: 6
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a83ce85325db82a00800000000000000
+      internalID: 732043100231222154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      decor_terrace_stones_v001_0: 4746742330600355320
+      decor_terrace_stones_v001_1: -4199876145400065654
+      decor_terrace_stones_v001_10: -2530133068618270531
+      decor_terrace_stones_v001_11: 6101123574804037056
+      decor_terrace_stones_v001_12: 2206730404387598644
+      decor_terrace_stones_v001_13: 8396393005094893901
+      decor_terrace_stones_v001_14: -1724385147067525551
+      decor_terrace_stones_v001_15: 3795297185935636366
+      decor_terrace_stones_v001_16: -5729710924907254924
+      decor_terrace_stones_v001_17: -1438605315363804512
+      decor_terrace_stones_v001_18: 5670662966120266361
+      decor_terrace_stones_v001_19: 302537797397115802
+      decor_terrace_stones_v001_2: 7261844887857238952
+      decor_terrace_stones_v001_20: -3846144111284214465
+      decor_terrace_stones_v001_21: -6900054683380572795
+      decor_terrace_stones_v001_22: 2835552568149458906
+      decor_terrace_stones_v001_23: -5965150895204782837
+      decor_terrace_stones_v001_24: 2940815035762292452
+      decor_terrace_stones_v001_25: -6232458845593563013
+      decor_terrace_stones_v001_26: 1881788511354752884
+      decor_terrace_stones_v001_27: 2033887674461119615
+      decor_terrace_stones_v001_28: 6436526540735776176
+      decor_terrace_stones_v001_29: -2756629869906542940
+      decor_terrace_stones_v001_3: -6666253547321419141
+      decor_terrace_stones_v001_30: 2126946751124559018
+      decor_terrace_stones_v001_31: -344125882535055186
+      decor_terrace_stones_v001_32: -4983586252361243131
+      decor_terrace_stones_v001_33: 3668819666828549515
+      decor_terrace_stones_v001_34: 275514359544728691
+      decor_terrace_stones_v001_35: 908384266298713821
+      decor_terrace_stones_v001_36: 4643721639960624616
+      decor_terrace_stones_v001_37: -4470899879138170177
+      decor_terrace_stones_v001_38: -7303652650612729745
+      decor_terrace_stones_v001_39: -85857071423116962
+      decor_terrace_stones_v001_4: 7269450532398988512
+      decor_terrace_stones_v001_40: -1734924959726668924
+      decor_terrace_stones_v001_41: -4859289068040581031
+      decor_terrace_stones_v001_42: 5712784497663626841
+      decor_terrace_stones_v001_43: 2531125363630139023
+      decor_terrace_stones_v001_44: -8440048988404112579
+      decor_terrace_stones_v001_45: 5471638131517804388
+      decor_terrace_stones_v001_46: 6640360333365896942
+      decor_terrace_stones_v001_47: -2864402113248388954
+      decor_terrace_stones_v001_48: 8390577247770585545
+      decor_terrace_stones_v001_49: -288008854902468468
+      decor_terrace_stones_v001_5: 2974753342891833524
+      decor_terrace_stones_v001_50: 7287193532171179638
+      decor_terrace_stones_v001_51: 3791080521474909889
+      decor_terrace_stones_v001_52: 732043100231222154
+      decor_terrace_stones_v001_6: 1727107410216427094
+      decor_terrace_stones_v001_7: 4254576027244626324
+      decor_terrace_stones_v001_8: 3128660628631267624
+      decor_terrace_stones_v001_9: 176789821623941321
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

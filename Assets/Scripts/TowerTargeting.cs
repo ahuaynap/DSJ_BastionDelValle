@@ -6,13 +6,15 @@ public class TowerTargeting : MonoBehaviour
     private GameManager gameManager;
     private EnemyHealth currentTarget;
     private bool isInitialized;
+    private bool listening;
+    private float rangeMultiplier = 1f;
 
     public EnemyHealth CurrentTarget =>
         currentTarget;
 
     public float DetectionRange =>
         towerData != null
-            ? towerData.AttackRange
+            ? HabitatRules.Scale(towerData.AttackRange, rangeMultiplier)
             : 0f;
 
     public bool Initialize(
@@ -45,7 +47,38 @@ public class TowerTargeting : MonoBehaviour
         gameManager = manager;
         currentTarget = null;
         isInitialized = true;
+        Listen();
         return true;
+    }
+
+    private void OnDestroy()
+    {
+        if (listening && HabitatSession.Active != null)
+        {
+            HabitatSession.Active.SynergiesChanged -= RefreshRange;
+        }
+
+        listening = false;
+    }
+
+    private void Listen()
+    {
+        if (listening || HabitatSession.Active == null)
+        {
+            return;
+        }
+
+        HabitatSession.Active.SynergiesChanged += RefreshRange;
+        listening = true;
+        RefreshRange();
+    }
+
+    private void RefreshRange()
+    {
+        TowerController owner = GetComponent<TowerController>();
+        rangeMultiplier = HabitatSession.Active == null || owner == null
+            ? 1f
+            : HabitatSession.Active.RangeMultiplierFor(owner);
     }
 
     private void Update()
@@ -81,14 +114,29 @@ public class TowerTargeting : MonoBehaviour
                 FindObjectsSortMode.None
             );
 
-        EnemyHealth closestEnemy = null;
+        EnemyHealth closest = null;
+        EnemyHealth closestAir = null;
+        EnemyHealth closestGround = null;
         float closestDistance = Mathf.Infinity;
+        float airDistance = Mathf.Infinity;
+        float groundDistance = Mathf.Infinity;
+        TravelMask allowed = towerData.AllowedTargets;
+        bool preferAir = towerData.Aim == TargetPriority.AirThenGround;
 
         foreach (EnemyHealth enemy in enemies)
         {
             if (enemy == null ||
                 enemy.IsDead ||
                 !enemy.IsInitialized)
+            {
+                continue;
+            }
+
+            EnemyTravel travel = enemy.Data == null
+                ? EnemyTravel.Ground
+                : enemy.Data.Travel;
+
+            if (!TargetRules.Allows(allowed, travel))
             {
                 continue;
             }
@@ -107,11 +155,28 @@ public class TowerTargeting : MonoBehaviour
             if (distance < closestDistance)
             {
                 closestDistance = distance;
-                closestEnemy = enemy;
+                closest = enemy;
+            }
+
+            if (travel == EnemyTravel.Air && distance < airDistance)
+            {
+                airDistance = distance;
+                closestAir = enemy;
+            }
+            else if (travel != EnemyTravel.Air && distance < groundDistance)
+            {
+                groundDistance = distance;
+                closestGround = enemy;
             }
         }
 
-        currentTarget = closestEnemy;
+        if (preferAir)
+        {
+            currentTarget = closestAir != null ? closestAir : closestGround;
+            return;
+        }
+
+        currentTarget = closest;
     }
 
     private void OnDrawGizmosSelected()
@@ -125,7 +190,7 @@ public class TowerTargeting : MonoBehaviour
 
         Gizmos.DrawWireSphere(
             transform.position,
-            towerData.AttackRange
+            DetectionRange
         );
     }
 }

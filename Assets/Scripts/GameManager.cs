@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using System;
 
@@ -19,6 +20,19 @@ public class GameManager : MonoBehaviour
         currentState = initialState;
 
         Debug.Log($"Game State: {currentState}");
+        StartCoroutine(AcknowledgeReload());
+    }
+
+    private void Start()
+    {
+        PlayfieldView.Apply();
+    }
+
+    private IEnumerator AcknowledgeReload()
+    {
+        yield return null;
+        SessionBoundary.FinishTravel();
+        SessionReload.Acknowledge();
     }
 
     public void SetVictory()

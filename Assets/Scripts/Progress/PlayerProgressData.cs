@@ -6,6 +6,12 @@ public class PlayerProgressData
 {
     public int schemaVersion;
     public List<string> discoveredIds;
+    public float musicVolume;
+    public float effectsVolume;
+    public bool campaignStarted;
+    public List<string> completedMaps;
+    public List<string> clearedTutorials;
+    public List<string> evaluations;
 }
 
 public enum ProgressFileProblem
@@ -41,6 +47,11 @@ public readonly struct ProgressParseResult
 {
     public ProgressFileProblem Problem { get; }
     public IReadOnlyList<string> DiscoveredIds { get; }
+    public float MusicVolume { get; }
+    public float EffectsVolume { get; }
+    public bool AudioUsesDefaults { get; }
+    public bool NeedsMigration { get; }
+    public CampaignSnapshot Campaign { get; }
     public string Detail { get; }
 
     public bool IsValid =>
@@ -49,20 +60,40 @@ public readonly struct ProgressParseResult
     private ProgressParseResult(
         ProgressFileProblem problem,
         IReadOnlyList<string> discoveredIds,
+        float musicVolume,
+        float effectsVolume,
+        bool audioUsesDefaults,
+        bool needsMigration,
+        CampaignSnapshot campaign,
         string detail)
     {
         Problem = problem;
         DiscoveredIds = discoveredIds ??
             Array.Empty<string>();
+        MusicVolume = musicVolume;
+        EffectsVolume = effectsVolume;
+        AudioUsesDefaults = audioUsesDefaults;
+        NeedsMigration = needsMigration;
+        Campaign = campaign;
         Detail = detail ?? string.Empty;
     }
 
     public static ProgressParseResult Valid(
-        IReadOnlyList<string> discoveredIds)
+        IReadOnlyList<string> discoveredIds,
+        float musicVolume,
+        float effectsVolume,
+        bool audioUsesDefaults,
+        bool needsMigration = false,
+        CampaignSnapshot campaign = default)
     {
         return new ProgressParseResult(
             ProgressFileProblem.None,
             discoveredIds,
+            musicVolume,
+            effectsVolume,
+            audioUsesDefaults,
+            needsMigration,
+            campaign,
             string.Empty);
     }
 
@@ -73,6 +104,11 @@ public readonly struct ProgressParseResult
         return new ProgressParseResult(
             problem,
             Array.Empty<string>(),
+            PlayerProgressCodec.DefaultMusicVolume,
+            PlayerProgressCodec.DefaultEffectsVolume,
+            true,
+            false,
+            CampaignSnapshot.Empty,
             detail);
     }
 }
@@ -84,6 +120,11 @@ public readonly struct ProgressLoadResult
     public IReadOnlyList<string> DiscoveredIds { get; }
     public bool WritesBlocked { get; }
     public bool RequiresSave { get; }
+    public float MusicVolume { get; }
+    public float EffectsVolume { get; }
+    public bool AudioUsesDefaults { get; }
+    public bool NeedsMigration { get; }
+    public CampaignSnapshot Campaign { get; }
     public string Detail { get; }
 
     public ProgressLoadResult(
@@ -92,7 +133,12 @@ public readonly struct ProgressLoadResult
         IReadOnlyList<string> discoveredIds,
         bool writesBlocked,
         bool requiresSave,
-        string detail)
+        string detail,
+        float musicVolume,
+        float effectsVolume,
+        bool audioUsesDefaults,
+        bool needsMigration = false,
+        CampaignSnapshot campaign = default)
     {
         Status = status;
         MainProblem = mainProblem;
@@ -101,6 +147,11 @@ public readonly struct ProgressLoadResult
         WritesBlocked = writesBlocked;
         RequiresSave = requiresSave;
         Detail = detail ?? string.Empty;
+        MusicVolume = musicVolume;
+        EffectsVolume = effectsVolume;
+        AudioUsesDefaults = audioUsesDefaults;
+        NeedsMigration = needsMigration;
+        Campaign = campaign;
     }
 }
 

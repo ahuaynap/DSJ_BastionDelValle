@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe02dcebdb1d44974a8537b511bf8f16, type: 3}
+  m_Name: CollectibleData_Water
+  m_EditorClassIdentifier: Assembly-CSharp::CollectibleData
+  collectibleId: memory_water_01
+  displayName: El agua conecta
+  category: 0
+  shortDescription: El agua sostiene la vida y conecta los cultivos del valle.
+  educationalContent: "Las plantas necesitan agua para crecer. En las zonas agr\xEDcolas,
+    los canales permiten conducirla hacia los cultivos. Cuidar su distribuci\xF3n
+    y evitar su contaminaci\xF3n ayuda a proteger este recurso.\n\nModelo educativo
+    simplificado; no representa con exactitud un ecosistema real."
+  worldSprite: {fileID: 21300000, guid: d8dfb79e991374da69195b18d62aaa1b, type: 3}
+  infographicSprite: {fileID: 0}

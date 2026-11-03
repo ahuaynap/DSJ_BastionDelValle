@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28927f8c8d304a1b8d9502619cc2625, type: 3}
+  m_Name: TowerData_Pollinator
+  m_EditorClassIdentifier: Assembly-CSharp::TowerData
+  towerId: tower_pollinator
+  displayName: Refugio de Polinizadores
+  description: "Da\xF1a en \xE1rea a los enemigos que quedan dentro del impacto."
+  buildCost: 60
+  attackRange: 2.5
+  attackInterval: 1.8
+  projectileDamage: 8
+  projectileSpeed: 6
+  slowMultiplier: 1
+  slowDuration: 0
+  impactMode: 1
+  impactRadius: 0.65
+  zoneRadius: 0
+  zoneDuration: 0
+  zonePulseDelay: 0
+  allowedTargets: 1
+  aim: 0
+  worldSprite: {fileID: 9051608349590412777, guid: 21da0b32c393d44d994a8c78abcc81cf, type: 3}
+  icon: {fileID: 0}

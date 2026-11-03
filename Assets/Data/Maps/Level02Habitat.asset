@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 110dd350d2bf64568bea33853b686592, type: 3}
+  m_Name: Level02Habitat
+  m_EditorClassIdentifier: Assembly-CSharp::HabitatSettings
+  configured: 1
+  initialWater: 50
+  initialSoil: 50
+  initialLife: 50
+  minimum: 0
+  maximum: 100
+  arrivalLoss: 1
+  recoveryGain: 10
+  threshold: 60
+  auraDistance: 2.5
+  hasteMultiplier: 0.85
+  reachMultiplier: 1.1
+  soilBonus: 5
+  waterTowerId: tower_water
+  soilTowerId: tower_roots
+  lifeTowerId: tower_pollinator
+  guardianTowerId: tower_basic
+  watcherTowerId: tower_condor

@@ -1,0 +1,1144 @@
+fileFormatVersion: 2
+guid: b86c072588e11418880d84cf3cedd578
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1113940729753968485
+    second: projectile_pollen_v001_0
+  - first:
+      213: -2882689432169384412
+    second: projectile_pollen_v001_1
+  - first:
+      213: -6929534745525431883
+    second: projectile_pollen_v001_2
+  - first:
+      213: 6932356618614372746
+    second: projectile_pollen_v001_3
+  - first:
+      213: -3449606623368324837
+    second: projectile_pollen_v001_4
+  - first:
+      213: 8574361471034457474
+    second: projectile_pollen_v001_5
+  - first:
+      213: 2729298202291099642
+    second: projectile_pollen_v001_6
+  - first:
+      213: -20457488127559621
+    second: projectile_pollen_v001_7
+  - first:
+      213: -6856294868811547344
+    second: projectile_pollen_v001_8
+  - first:
+      213: -6589986213151976038
+    second: projectile_pollen_v001_9
+  - first:
+      213: -2177995001951518872
+    second: projectile_pollen_v001_10
+  - first:
+      213: 1479705538225350998
+    second: projectile_pollen_v001_11
+  - first:
+      213: 4001270698901513957
+    second: projectile_pollen_v001_12
+  - first:
+      213: 6351132971888493668
+    second: projectile_pollen_v001_13
+  - first:
+      213: 5636988473319664246
+    second: projectile_pollen_v001_14
+  - first:
+      213: 2394109298097832315
+    second: projectile_pollen_v001_15
+  - first:
+      213: -6670438279169023184
+    second: projectile_pollen_v001_16
+  - first:
+      213: 4754877359497034987
+    second: projectile_pollen_v001_17
+  - first:
+      213: -5051925967287159128
+    second: projectile_pollen_v001_18
+  - first:
+      213: -6132741707240018875
+    second: projectile_pollen_v001_19
+  - first:
+      213: 3401246458356286605
+    second: projectile_pollen_v001_20
+  - first:
+      213: 1034396444423805505
+    second: projectile_pollen_v001_21
+  - first:
+      213: 1154928837557312322
+    second: projectile_pollen_v001_22
+  - first:
+      213: 5567994273813896906
+    second: projectile_pollen_v001_23
+  - first:
+      213: -8720384179085989447
+    second: projectile_pollen_v001_24
+  - first:
+      213: -7372467952660267851
+    second: projectile_pollen_v001_25
+  - first:
+      213: 4200300255439726338
+    second: projectile_pollen_v001_26
+  - first:
+      213: -7379913964702075772
+    second: projectile_pollen_v001_27
+  - first:
+      213: 8801860385799656911
+    second: projectile_pollen_v001_28
+  - first:
+      213: 6191837228859110865
+    second: projectile_pollen_v001_29
+  - first:
+      213: 4247913983232786272
+    second: projectile_pollen_v001_30
+  - first:
+      213: 4175946711587413698
+    second: projectile_pollen_v001_31
+  - first:
+      213: -8239441368933736463
+    second: projectile_pollen_v001_32
+  - first:
+      213: 5717656935055798210
+    second: projectile_pollen_v001_33
+  - first:
+      213: -2501087446556709692
+    second: projectile_pollen_v001_34
+  - first:
+      213: -7614709423516727174
+    second: projectile_pollen_v001_35
+  - first:
+      213: -5095168561719568558
+    second: projectile_pollen_v001_36
+  - first:
+      213: -6711604749354327867
+    second: projectile_pollen_v001_37
+  - first:
+      213: -3347489205457690743
+    second: projectile_pollen_v001_38
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 400
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: projectile_pollen_v001_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 811
+        width: 232
+        height: 443
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56f13d91133857f00800000000000000
+      internalID: 1113940729753968485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1227
+        height: 995
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42675cd0c31aef7d0800000000000000
+      internalID: -2882689432169384412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 1068
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b1da3afcd855df90800000000000000
+      internalID: -6929534745525431883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_3
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 1013
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8976dc8d9da43060800000000000000
+      internalID: 6932356618614372746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_4
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 1022
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b19db478d098020d0800000000000000
+      internalID: -3449606623368324837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_5
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 1063
+        width: 26
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28dfdc834504ef670800000000000000
+      internalID: 8574361471034457474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_6
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1024
+        width: 76
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af75ca9214a60e520800000000000000
+      internalID: 2729298202291099642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_7
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 1156
+        width: 176
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b38f82fd50257bff0800000000000000
+      internalID: -20457488127559621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_8
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 1044
+        width: 190
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03d772d942c89d0a0800000000000000
+      internalID: -6856294868811547344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_9
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 1034
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a95da52547aab84a0800000000000000
+      internalID: -6589986213151976038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_10
+      rect:
+        serializedVersion: 2
+        x: 735
+        y: 1022
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86f7a12d51536c1e0800000000000000
+      internalID: -2177995001951518872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_11
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 1019
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 659a912e858f88410800000000000000
+      internalID: 1479705538225350998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_12
+      rect:
+        serializedVersion: 2
+        x: 747
+        y: 989
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e62432408e578730800000000000000
+      internalID: 4001270698901513957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_13
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 1094
+        width: 83
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4644fa6c9c1c32850800000000000000
+      internalID: 6351132971888493668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_14
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 1028
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67aa033862b9a3e40800000000000000
+      internalID: 5636988473319664246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_15
+      rect:
+        serializedVersion: 2
+        x: 820
+        y: 988
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b71c49ad8b5993120800000000000000
+      internalID: 2394109298097832315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_16
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 1030
+        width: 29
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03366f10ab7dd63a0800000000000000
+      internalID: -6670438279169023184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_17
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 1058
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bec3e5b14c7bcf140800000000000000
+      internalID: 4754877359497034987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_18
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 456
+        width: 363
+        height: 782
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a6f6485914f3e9b0800000000000000
+      internalID: -5051925967287159128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_19
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 1028
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54c6cb0f8ef14eaa0800000000000000
+      internalID: -6132741707240018875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_20
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 994
+        width: 30
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d84c1ef12a7a33f20800000000000000
+      internalID: 3401246458356286605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_21
+      rect:
+        serializedVersion: 2
+        x: 908
+        y: 1028
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14adec2f51aea5e00800000000000000
+      internalID: 1034396444423805505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_22
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 980
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24b557f98a1270010800000000000000
+      internalID: 1154928837557312322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_23
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 913
+        width: 97
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ace1612aa4d754d40800000000000000
+      internalID: 5567994273813896906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_24
+      rect:
+        serializedVersion: 2
+        x: 1021
+        y: 883
+        width: 21
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b9a4acaac8faf680800000000000000
+      internalID: -8720384179085989447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_25
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 738
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bcbbb3457bbfa990800000000000000
+      internalID: -7372467952660267851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_26
+      rect:
+        serializedVersion: 2
+        x: 987
+        y: 409
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 207a77304d67a4a30800000000000000
+      internalID: 4200300255439726338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_27
+      rect:
+        serializedVersion: 2
+        x: 995
+        y: 391
+        width: 41
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 484fcfc7957459990800000000000000
+      internalID: -7379913964702075772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_28
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 345
+        width: 49
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc5db2af26d762a70800000000000000
+      internalID: 8801860385799656911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_29
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 312
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d5bf256723dde550800000000000000
+      internalID: 6191837228859110865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_30
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 272
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06f3107e24f93fa30800000000000000
+      internalID: 4247913983232786272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_31
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 224
+        width: 42
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ced029b861f3f930800000000000000
+      internalID: 4175946711587413698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_32
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 294
+        width: 82
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ffdb09babf97ad80800000000000000
+      internalID: -8239441368933736463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_33
+      rect:
+        serializedVersion: 2
+        x: 1145
+        y: 294
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cfac8160b2395f40800000000000000
+      internalID: 5717656935055798210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_34
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 264
+        width: 75
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cc6ccbf73a5a4dd0800000000000000
+      internalID: -2501087446556709692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_35
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 136
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a78477faf1e135690800000000000000
+      internalID: -7614709423516727174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_36
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 144
+        width: 35
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25797ff30335a49b0800000000000000
+      internalID: -5095168561719568558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_37
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 106
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c029e14a079bd2a0800000000000000
+      internalID: -6711604749354327867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: projectile_pollen_v001_38
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 106
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98f5d3bad445b81d0800000000000000
+      internalID: -3347489205457690743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      projectile_pollen_v001_0: 1113940729753968485
+      projectile_pollen_v001_1: -2882689432169384412
+      projectile_pollen_v001_10: -2177995001951518872
+      projectile_pollen_v001_11: 1479705538225350998
+      projectile_pollen_v001_12: 4001270698901513957
+      projectile_pollen_v001_13: 6351132971888493668
+      projectile_pollen_v001_14: 5636988473319664246
+      projectile_pollen_v001_15: 2394109298097832315
+      projectile_pollen_v001_16: -6670438279169023184
+      projectile_pollen_v001_17: 4754877359497034987
+      projectile_pollen_v001_18: -5051925967287159128
+      projectile_pollen_v001_19: -6132741707240018875
+      projectile_pollen_v001_2: -6929534745525431883
+      projectile_pollen_v001_20: 3401246458356286605
+      projectile_pollen_v001_21: 1034396444423805505
+      projectile_pollen_v001_22: 1154928837557312322
+      projectile_pollen_v001_23: 5567994273813896906
+      projectile_pollen_v001_24: -8720384179085989447
+      projectile_pollen_v001_25: -7372467952660267851
+      projectile_pollen_v001_26: 4200300255439726338
+      projectile_pollen_v001_27: -7379913964702075772
+      projectile_pollen_v001_28: 8801860385799656911
+      projectile_pollen_v001_29: 6191837228859110865
+      projectile_pollen_v001_3: 6932356618614372746
+      projectile_pollen_v001_30: 4247913983232786272
+      projectile_pollen_v001_31: 4175946711587413698
+      projectile_pollen_v001_32: -8239441368933736463
+      projectile_pollen_v001_33: 5717656935055798210
+      projectile_pollen_v001_34: -2501087446556709692
+      projectile_pollen_v001_35: -7614709423516727174
+      projectile_pollen_v001_36: -5095168561719568558
+      projectile_pollen_v001_37: -6711604749354327867
+      projectile_pollen_v001_38: -3347489205457690743
+      projectile_pollen_v001_4: -3449606623368324837
+      projectile_pollen_v001_5: 8574361471034457474
+      projectile_pollen_v001_6: 2729298202291099642
+      projectile_pollen_v001_7: -20457488127559621
+      projectile_pollen_v001_8: -6856294868811547344
+      projectile_pollen_v001_9: -6589986213151976038
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

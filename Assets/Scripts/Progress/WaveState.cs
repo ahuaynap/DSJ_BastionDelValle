@@ -4,5 +4,6 @@ public enum WaveState
     Spawning,
     Active,
     Intermission,
-    Completed
+    Completed,
+    SpawnError
 }

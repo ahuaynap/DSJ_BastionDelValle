@@ -35,7 +35,7 @@ public class DiscoveryProgressTests
     }
 
     [Test]
-    public void SaveWritesSchemaOneAndPreservesExistingIds()
+    public void SaveWritesCurrentSchemaAndPreservesExistingIds()
     {
         string[] ids =
         {
@@ -58,11 +58,23 @@ public class DiscoveryProgressTests
                 File.ReadAllText(store.MainFilePath));
 
         Assert.IsTrue(parsed.IsValid);
+        Assert.IsFalse(parsed.AudioUsesDefaults);
+        Assert.AreEqual(
+            PlayerProgressCodec.DefaultMusicVolume,
+            parsed.MusicVolume,
+            0.0001f);
+        Assert.AreEqual(
+            PlayerProgressCodec.DefaultEffectsVolume,
+            parsed.EffectsVolume,
+            0.0001f);
         CollectionAssert.AreEqual(ids, parsed.DiscoveredIds);
 
         string text = File.ReadAllText(store.MainFilePath);
-        StringAssert.Contains("\"schemaVersion\"", text);
+        StringAssert.Contains("\"schemaVersion\": 3", text);
+        StringAssert.Contains("\"campaignStarted\"", text);
         StringAssert.Contains("\"discoveredIds\"", text);
+        StringAssert.Contains("\"musicVolume\"", text);
+        StringAssert.Contains("\"effectsVolume\"", text);
         StringAssert.Contains("BIO_POLINIZADOR_01", text);
     }
 
@@ -116,6 +128,19 @@ public class DiscoveryProgressTests
 
         Assert.AreEqual(ProgressLoadStatus.Loaded, empty.Status);
         Assert.AreEqual(0, empty.DiscoveredIds.Count);
+        Assert.IsTrue(empty.RequiresSave);
+        Assert.IsTrue(empty.AudioUsesDefaults);
+        Assert.AreEqual(
+            PlayerProgressCodec.DefaultMusicVolume,
+            empty.MusicVolume,
+            0.0001f);
+        Assert.AreEqual(
+            PlayerProgressCodec.DefaultEffectsVolume,
+            empty.EffectsVolume,
+            0.0001f);
+        Assert.AreEqual(
+            "{\"schemaVersion\":1,\"discoveredIds\":[]}",
+            File.ReadAllText(store.MainFilePath));
         Assert.IsTrue(File.Exists(store.MainFilePath));
 
         File.WriteAllText(
@@ -162,11 +187,24 @@ public class DiscoveryProgressTests
         Assert.AreEqual(
             ProgressFileProblem.UnsupportedSchema,
             PlayerProgressCodec.Parse(
-                "{\"schemaVersion\":2,\"future\":true}").Problem);
+                "{\"schemaVersion\":4,\"future\":true}").Problem);
         Assert.AreEqual(
             ProgressFileProblem.UnsupportedSchema,
             PlayerProgressCodec.Parse(
+                "{\"schemaVersion\":4.0,\"discoveredIds\":[]}").Problem);
+        Assert.AreEqual(
+            ProgressFileProblem.InvalidStructure,
+            PlayerProgressCodec.Parse(
                 "{\"schemaVersion\":2.0,\"discoveredIds\":[]}").Problem);
+        Assert.AreEqual(
+            ProgressFileProblem.InvalidStructure,
+            PlayerProgressCodec.Parse(
+                "{\"schemaVersion\":2,\"discoveredIds\":[]}").Problem);
+        Assert.AreEqual(
+            ProgressFileProblem.InvalidStructure,
+            PlayerProgressCodec.Parse(
+                "{\"schemaVersion\":2,\"discoveredIds\":[]," +
+                "\"musicVolume\":1.5,\"effectsVolume\":0.5}").Problem);
         Assert.AreEqual(
             ProgressFileProblem.InvalidStructure,
             PlayerProgressCodec.Parse(
@@ -297,7 +335,8 @@ public class DiscoveryProgressTests
     public void NewerSchemaIsPreservedAndNotOverwritten()
     {
         string future =
-            "{\"schemaVersion\":2,\"discoveredIds\":[\"BIO_POLINIZADOR_01\"]}";
+            "{\"schemaVersion\":4,\"discoveredIds\":[\"BIO_POLINIZADOR_01\"]," +
+            "\"musicVolume\":0.2,\"effectsVolume\":0.4}";
         File.WriteAllText(store.MainFilePath, future);
 
         ProgressLoadResult loaded = store.Load();
@@ -349,6 +388,70 @@ public class DiscoveryProgressTests
         Assert.AreEqual(ProgressSaveStatus.AccessFailed, saved.Status);
         Assert.AreEqual("blocked", File.ReadAllText(blocker));
         Assert.AreEqual(1, Directory.GetFiles(directory).Length);
+    }
+
+    [Test]
+    public void CurrentSchemaRoundTripsAudioPreferences()
+    {
+        store.SetAudioPreferences(0.2f, 0.4f);
+
+        Assert.AreEqual(
+            ProgressSaveStatus.Saved,
+            store.Save(new[] { "BIO_POLINIZADOR_01" }).Status);
+
+        DiscoveryProgressStore reloaded =
+            new DiscoveryProgressStore(directory);
+        ProgressLoadResult loaded = reloaded.Load();
+
+        Assert.AreEqual(ProgressLoadStatus.Loaded, loaded.Status);
+        Assert.IsFalse(loaded.AudioUsesDefaults);
+        Assert.IsFalse(loaded.RequiresSave);
+        Assert.IsFalse(loaded.WritesBlocked);
+        Assert.AreEqual(0.2f, loaded.MusicVolume, 0.0001f);
+        Assert.AreEqual(0.4f, loaded.EffectsVolume, 0.0001f);
+        CollectionAssert.AreEqual(
+            new[] { "BIO_POLINIZADOR_01" },
+            loaded.DiscoveredIds);
+    }
+
+    [Test]
+    public void SaveKeepsAudioWhenDiscoveriesChange()
+    {
+        store.SetAudioPreferences(0.25f, 0.5f);
+        store.Save(new[] { "BIO_POLINIZADOR_01" });
+        store.Save(new[]
+        {
+            "BIO_POLINIZADOR_01",
+            "UNKNOWN_FUTURO"
+        });
+
+        ProgressParseResult parsed = PlayerProgressCodec.Parse(
+            File.ReadAllText(store.MainFilePath));
+
+        Assert.IsTrue(parsed.IsValid);
+        Assert.AreEqual(0.25f, parsed.MusicVolume, 0.0001f);
+        Assert.AreEqual(0.5f, parsed.EffectsVolume, 0.0001f);
+        CollectionAssert.AreEqual(
+            new[] { "BIO_POLINIZADOR_01", "UNKNOWN_FUTURO" },
+            parsed.DiscoveredIds);
+    }
+
+    [Test]
+    public void SchemaTwoWithoutAudioIsQuarantinedAndNotTreatedAsEmpty()
+    {
+        string json =
+            "{\"schemaVersion\":2,\"discoveredIds\":[\"BIO_POLINIZADOR_01\"]}";
+        File.WriteAllText(store.MainFilePath, json);
+
+        ProgressLoadResult loaded = store.Load();
+
+        Assert.AreEqual(
+            ProgressLoadStatus.InvalidStructure,
+            loaded.Status);
+        Assert.IsFalse(loaded.WritesBlocked);
+        Assert.AreEqual(0, loaded.DiscoveredIds.Count);
+        Assert.IsFalse(File.Exists(store.MainFilePath));
+        Assert.AreEqual(json, File.ReadAllText(FileContaining(json)));
     }
 
     private string FileContaining(string content)

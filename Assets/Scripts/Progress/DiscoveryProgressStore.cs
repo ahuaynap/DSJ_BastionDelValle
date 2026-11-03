@@ -39,6 +39,66 @@ public sealed class DiscoveryProgressStore
 
     public bool WritesBlocked { get; private set; }
 
+    public float MusicVolume { get; private set; } =
+        PlayerProgressCodec.DefaultMusicVolume;
+
+    public float EffectsVolume { get; private set; } =
+        PlayerProgressCodec.DefaultEffectsVolume;
+
+    private bool campaignStarted;
+    private readonly List<string> completedMaps = new();
+    private readonly List<string> clearedTutorials = new();
+    private readonly List<string> evaluations = new();
+
+    public bool CampaignStarted => campaignStarted;
+
+    public IReadOnlyList<string> CompletedMaps => completedMaps;
+
+    public IReadOnlyList<string> ClearedTutorials => clearedTutorials;
+
+    public IReadOnlyList<string> Evaluations => evaluations;
+
+    public CampaignSnapshot Snapshot()
+    {
+        return new CampaignSnapshot(
+            campaignStarted,
+            completedMaps,
+            clearedTutorials,
+            evaluations);
+    }
+
+    public void NoteStarted()
+    {
+        campaignStarted = true;
+    }
+
+    public bool NoteMap(string sceneName)
+    {
+        if (!CampaignRules.IsPlayableMap(sceneName))
+        {
+            return false;
+        }
+
+        campaignStarted = true;
+
+        for (int i = 0; i < completedMaps.Count; i++)
+        {
+            if (completedMaps[i] == sceneName)
+            {
+                return false;
+            }
+        }
+
+        completedMaps.Add(sceneName);
+        return true;
+    }
+
+    public void SetAudioPreferences(float music, float effects)
+    {
+        MusicVolume = PlayerProgressCodec.ClampVolume(music);
+        EffectsVolume = PlayerProgressCodec.ClampVolume(effects);
+    }
+
     public ProgressLoadResult Load()
     {
         WritesBlocked = false;
@@ -80,29 +140,41 @@ public sealed class DiscoveryProgressStore
                 ProgressFileProblem.UnsupportedSchema)
             {
                 WritesBlocked = true;
-                return Result(
-                    ProgressLoadStatus.Loaded,
-                    ProgressFileProblem.None,
-                    main.Ids,
-                    true,
-                    false,
-                    "Discoveries were loaded, but the backup uses " +
-                    "a newer schema. Progress will not be overwritten.");
+            return Result(
+                ProgressLoadStatus.Loaded,
+                ProgressFileProblem.None,
+                main.Ids,
+                true,
+                false,
+                "Discoveries were loaded, but the backup uses " +
+                "a newer schema. Progress will not be overwritten.",
+                main.MusicVolume,
+                main.EffectsVolume,
+                true,
+                main.AudioUsesDefaults,
+                false,
+                main.Campaign);
             }
 
             if (existingBackup.Problem ==
                 ProgressFileProblem.AccessFailed)
             {
                 WritesBlocked = true;
-                return Result(
-                    ProgressLoadStatus.Loaded,
-                    ProgressFileProblem.None,
-                    main.Ids,
-                    true,
-                    false,
-                    "Discoveries were loaded, but the backup could " +
-                    "not be read. Progress will not be overwritten. " +
-                    existingBackup.Detail);
+            return Result(
+                ProgressLoadStatus.Loaded,
+                ProgressFileProblem.None,
+                main.Ids,
+                true,
+                false,
+                "Discoveries were loaded, but the backup could " +
+                "not be read. Progress will not be overwritten. " +
+                existingBackup.Detail,
+                main.MusicVolume,
+                main.EffectsVolume,
+                true,
+                main.AudioUsesDefaults,
+                false,
+                main.Campaign);
             }
 
             return Result(
@@ -110,8 +182,14 @@ public sealed class DiscoveryProgressStore
                 ProgressFileProblem.None,
                 main.Ids,
                 false,
-                false,
-                string.Empty);
+                main.NeedsMigration,
+                string.Empty,
+                main.MusicVolume,
+                main.EffectsVolume,
+                true,
+                main.AudioUsesDefaults,
+                main.NeedsMigration,
+                main.Campaign);
         }
 
         string preservedMain = string.Empty;
@@ -163,8 +241,14 @@ public sealed class DiscoveryProgressStore
                 main.Problem,
                 backup.Ids,
                 false,
-                !restored,
-                detail);
+                !restored || backup.NeedsMigration,
+                detail,
+                backup.MusicVolume,
+                backup.EffectsVolume,
+                true,
+                backup.AudioUsesDefaults,
+                !restored || backup.NeedsMigration,
+                backup.Campaign);
         }
 
         if (backup.Problem ==
@@ -317,12 +401,19 @@ public sealed class DiscoveryProgressStore
 
         List<string> normalized =
             PlayerProgressCodec.NormalizeIds(discoveredIds);
-        string json = PlayerProgressCodec.Serialize(normalized);
+        string json = PlayerProgressCodec.Serialize(
+            normalized,
+            MusicVolume,
+            EffectsVolume,
+            Snapshot());
         ProgressParseResult serialized =
             PlayerProgressCodec.Parse(json);
 
         if (!serialized.IsValid ||
-            !SameIds(serialized.DiscoveredIds, normalized))
+            !SameIds(serialized.DiscoveredIds, normalized) ||
+            !SameVolume(serialized.MusicVolume, MusicVolume) ||
+            !SameVolume(serialized.EffectsVolume, EffectsVolume) ||
+            !SameCampaign(serialized.Campaign, Snapshot()))
         {
             return new ProgressSaveResult(
                 ProgressSaveStatus.ValidationFailed,
@@ -341,7 +432,10 @@ public sealed class DiscoveryProgressStore
                 PlayerProgressCodec.Parse(readBack);
 
             if (!written.IsValid ||
-                !SameIds(written.DiscoveredIds, normalized))
+                !SameIds(written.DiscoveredIds, normalized) ||
+                !SameVolume(written.MusicVolume, MusicVolume) ||
+                !SameVolume(written.EffectsVolume, EffectsVolume) ||
+                !SameCampaign(written.Campaign, Snapshot()))
             {
                 DeleteTempFile();
                 return new ProgressSaveResult(
@@ -419,6 +513,112 @@ public sealed class DiscoveryProgressStore
         return new ProgressSaveResult(
             ProgressSaveStatus.Saved,
             string.Empty);
+    }
+
+    public ProgressSaveResult ResetCampaign()
+    {
+        if (WritesBlocked)
+        {
+            return new ProgressSaveResult(
+                ProgressSaveStatus.BlockedUnsupportedSchema,
+                "Progress writes are blocked for this session.");
+        }
+
+        FileRead main = Read(MainFilePath);
+        FileRead backup = Read(BackupFilePath);
+
+        if (main.Problem == ProgressFileProblem.UnsupportedSchema ||
+            backup.Problem == ProgressFileProblem.UnsupportedSchema)
+        {
+            WritesBlocked = true;
+            return new ProgressSaveResult(
+                ProgressSaveStatus.BlockedUnsupportedSchema,
+                "The progress file uses a newer schema and was left unchanged.");
+        }
+
+        if (main.Problem == ProgressFileProblem.AccessFailed ||
+            backup.Problem == ProgressFileProblem.AccessFailed)
+        {
+            return new ProgressSaveResult(
+                ProgressSaveStatus.AccessFailed,
+                main.Problem == ProgressFileProblem.AccessFailed
+                    ? main.Detail
+                    : backup.Detail);
+        }
+
+        string json = PlayerProgressCodec.Serialize(
+            Array.Empty<string>(),
+            MusicVolume,
+            EffectsVolume,
+            CampaignSnapshot.Empty);
+        ProgressParseResult serialized = PlayerProgressCodec.Parse(json);
+
+        if (!serialized.IsValid ||
+            serialized.DiscoveredIds.Count != 0 ||
+            serialized.Campaign.Started ||
+            serialized.Campaign.CompletedMaps.Count != 0)
+        {
+            return new ProgressSaveResult(
+                ProgressSaveStatus.ValidationFailed,
+                "The reset progress failed validation.");
+        }
+
+        byte[] previousMain = ReadBytes(MainFilePath);
+        byte[] previousBackup = ReadBytes(BackupFilePath);
+
+        try
+        {
+            Directory.CreateDirectory(directoryPath);
+            File.WriteAllBytes(TemporaryFilePath, Utf8.GetBytes(json));
+            File.Copy(TemporaryFilePath, MainFilePath, true);
+            File.Copy(TemporaryFilePath, BackupFilePath, true);
+            ProgressParseResult writtenMain =
+                PlayerProgressCodec.Parse(File.ReadAllText(MainFilePath, Utf8));
+            ProgressParseResult writtenBackup =
+                PlayerProgressCodec.Parse(File.ReadAllText(BackupFilePath, Utf8));
+
+            if (!writtenMain.IsValid ||
+                !writtenBackup.IsValid ||
+                writtenMain.DiscoveredIds.Count != 0 ||
+                writtenBackup.DiscoveredIds.Count != 0 ||
+                !SameVolume(writtenMain.MusicVolume, MusicVolume) ||
+                !SameVolume(writtenBackup.MusicVolume, MusicVolume))
+            {
+                RestoreBytes(MainFilePath, previousMain);
+                RestoreBytes(BackupFilePath, previousBackup);
+                DeleteTempFile();
+                return new ProgressSaveResult(
+                    ProgressSaveStatus.ValidationFailed,
+                    "The reset progress did not stay on disk.");
+            }
+
+            DeleteTempFile();
+            campaignStarted = false;
+            completedMaps.Clear();
+            clearedTutorials.Clear();
+            evaluations.Clear();
+            return new ProgressSaveResult(
+                ProgressSaveStatus.Saved,
+                string.Empty);
+        }
+        catch (IOException exception)
+        {
+            RestoreBytes(MainFilePath, previousMain);
+            RestoreBytes(BackupFilePath, previousBackup);
+            DeleteTempFile();
+            return new ProgressSaveResult(
+                ProgressSaveStatus.AccessFailed,
+                exception.Message);
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            RestoreBytes(MainFilePath, previousMain);
+            RestoreBytes(BackupFilePath, previousBackup);
+            DeleteTempFile();
+            return new ProgressSaveResult(
+                ProgressSaveStatus.AccessFailed,
+                exception.Message);
+        }
     }
 
     private bool PrepareBackupForReplacement()
@@ -564,7 +764,13 @@ public sealed class DiscoveryProgressStore
 
         if (parsed.Problem == ProgressFileProblem.None)
         {
-            return FileRead.Loaded(parsed.DiscoveredIds);
+            return FileRead.Loaded(
+                parsed.DiscoveredIds,
+                parsed.MusicVolume,
+                parsed.EffectsVolume,
+                parsed.AudioUsesDefaults,
+                parsed.NeedsMigration,
+                parsed.Campaign);
         }
 
         return FileRead.Failed(parsed.Problem, parsed.Detail);
@@ -647,6 +853,11 @@ public sealed class DiscoveryProgressStore
         return true;
     }
 
+    private static bool SameVolume(float left, float right)
+    {
+        return Math.Abs(left - right) <= 0.0001f;
+    }
+
     private static string Describe(ProgressFileProblem problem)
     {
         switch (problem)
@@ -666,46 +877,175 @@ public sealed class DiscoveryProgressStore
         }
     }
 
-    private static ProgressLoadResult Result(
+    private ProgressLoadResult Result(
         ProgressLoadStatus status,
         ProgressFileProblem mainProblem,
         IReadOnlyList<string> discoveredIds,
         bool writesBlocked,
         bool requiresSave,
-        string detail)
+        string detail,
+        float music = PlayerProgressCodec.DefaultMusicVolume,
+        float effects = PlayerProgressCodec.DefaultEffectsVolume,
+        bool rememberAudio = false,
+        bool audioUsesDefaults = true,
+        bool needsMigration = false,
+        CampaignSnapshot campaign = default)
     {
+        float safeMusic = PlayerProgressCodec.ClampVolume(music);
+        float safeEffects = PlayerProgressCodec.ClampVolume(effects);
+
+        if (rememberAudio)
+        {
+            MusicVolume = safeMusic;
+            EffectsVolume = safeEffects;
+            Remember(campaign);
+        }
+
         return new ProgressLoadResult(
             status,
             mainProblem,
             discoveredIds,
             writesBlocked,
             requiresSave,
-            detail);
+            detail,
+            safeMusic,
+            safeEffects,
+            audioUsesDefaults,
+            needsMigration,
+            campaign);
+    }
+
+    private void Remember(CampaignSnapshot campaign)
+    {
+        campaignStarted = campaign.Started;
+        Replace(completedMaps, campaign.CompletedMaps);
+        Replace(clearedTutorials, campaign.ClearedTutorials);
+        Replace(evaluations, campaign.Evaluations);
+    }
+
+    private static void Replace(
+        List<string> target,
+        IReadOnlyList<string> values)
+    {
+        target.Clear();
+
+        if (values == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < values.Count; i++)
+        {
+            if (!string.IsNullOrWhiteSpace(values[i]))
+            {
+                target.Add(values[i]);
+            }
+        }
+    }
+
+    private static bool SameCampaign(
+        CampaignSnapshot left,
+        CampaignSnapshot right)
+    {
+        return left.Started == right.Started &&
+            SameIds(left.CompletedMaps, right.CompletedMaps) &&
+            SameIds(left.ClearedTutorials, right.ClearedTutorials) &&
+            SameIds(left.Evaluations, right.Evaluations);
+    }
+
+    private static byte[] ReadBytes(string path)
+    {
+        try
+        {
+            if (!File.Exists(path))
+            {
+                return null;
+            }
+
+            return File.ReadAllBytes(path);
+        }
+        catch (IOException)
+        {
+            return null;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return null;
+        }
+    }
+
+    private static void RestoreBytes(string path, byte[] bytes)
+    {
+        try
+        {
+            if (bytes == null)
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+
+                return;
+            }
+
+            File.WriteAllBytes(path, bytes);
+        }
+        catch (IOException)
+        {
+        }
+        catch (UnauthorizedAccessException)
+        {
+        }
     }
 
     private readonly struct FileRead
     {
         public ProgressFileProblem Problem { get; }
         public IReadOnlyList<string> Ids { get; }
+        public float MusicVolume { get; }
+        public float EffectsVolume { get; }
+        public bool AudioUsesDefaults { get; }
+        public bool NeedsMigration { get; }
+        public CampaignSnapshot Campaign { get; }
         public string Detail { get; }
 
         private FileRead(
             ProgressFileProblem problem,
             IReadOnlyList<string> ids,
-            string detail)
+            string detail,
+            float musicVolume,
+            float effectsVolume,
+            bool audioUsesDefaults,
+            bool needsMigration,
+            CampaignSnapshot campaign)
         {
             Problem = problem;
             Ids = ids ?? Array.Empty<string>();
             Detail = detail ?? string.Empty;
+            MusicVolume = musicVolume;
+            EffectsVolume = effectsVolume;
+            AudioUsesDefaults = audioUsesDefaults;
+            NeedsMigration = needsMigration;
+            Campaign = campaign;
         }
 
         public static FileRead Loaded(
-            IReadOnlyList<string> ids)
+            IReadOnlyList<string> ids,
+            float musicVolume,
+            float effectsVolume,
+            bool audioUsesDefaults,
+            bool needsMigration,
+            CampaignSnapshot campaign)
         {
             return new FileRead(
                 ProgressFileProblem.None,
                 ids,
-                string.Empty);
+                string.Empty,
+                musicVolume,
+                effectsVolume,
+                audioUsesDefaults,
+                needsMigration,
+                campaign);
         }
 
         public static FileRead Failed(
@@ -715,7 +1055,12 @@ public sealed class DiscoveryProgressStore
             return new FileRead(
                 problem,
                 Array.Empty<string>(),
-                detail);
+                detail,
+                PlayerProgressCodec.DefaultMusicVolume,
+                PlayerProgressCodec.DefaultEffectsVolume,
+                true,
+                false,
+                CampaignSnapshot.Empty);
         }
     }
 }
